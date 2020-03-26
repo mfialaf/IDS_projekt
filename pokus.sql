@@ -12,95 +12,98 @@
 
 --- Tvorba tabulek
 CREATE TABLE kocka
-          (
-              hlavni_jmeno VARCHAR(160) NOT NULL PRIMARY KEY,
-              vzorek_kuze INT NOT NULL,
-              barva_srsti VARCHAR(50) NOT NULL,
+        (
+            hlavni_jmeno VARCHAR(160) NOT NULL PRIMARY KEY,
+            vzorek_kuze INT NOT NULL,
+            barva_srsti VARCHAR(50) NOT NULL,
 
-              typ_rasy VARCHAR(50) NOT NULL
-          );
+            typ_rasy VARCHAR(50) NOT NULL --FK rasy
+        );
 
 CREATE TABLE zivot
-          (
-              ID_zivot INT NOT NULL PRIMARY KEY, -- regex na max 9
-              poradi INT NOT NULL,
-              delka INT NOT NULL,
-              misto_narozeni VARCHAR(50) NOT NULL
-          );
+        (
+            ID_zivot INT NOT NULL PRIMARY KEY, -- regex na max 9
+            poradi INT NOT NULL,
+            delka INT NOT NULL,
+            misto_narozeni VARCHAR(50) NOT NULL,
+
+            id_kocky VARCHAR(160) NOT NULL -- FK kocky
+        );
 
 CREATE TABLE teritorium
-          (
-              ID_teritorium VARCHAR(50) NOT NULL PRIMARY KEY,
-              typ_teritoria VARCHAR(50) NOT NULL,
-              kapacita_kocek INT NOT NULL
-          );
+        (
+            ID_teritorium VARCHAR(50) NOT NULL PRIMARY KEY,
+            typ_teritoria VARCHAR(50) NOT NULL,
+            kapacita_kocek INT NOT NULL
+        );
 
 CREATE TABLE vlastnictvi
-          (
-              ID_valstnictvi VARCHAR(50) NOT NULL PRIMARY KEY,
-              typ_vlastnictvi VARCHAR(50) NOT NULL,
-              kvantita INT NOT NULL
-          );
+        (
+            ID_valstnictvi VARCHAR(50) NOT NULL PRIMARY KEY,
+            typ_vlastnictvi VARCHAR(50) NOT NULL,
+            kvantita INT NOT NULL,
+
+            id_hostitele VARCHAR(50) NOT NULL, -- FK hostitele
+            id_kocky VARCHAR(160) NOT NULL, -- FK kocky
+            id_teritoria VARCHAR(50) NOT NULL -- FK teritoria
+        );
 
 CREATE TABLE hostitel
-          (
-              ID_hostitel VARCHAR(50) NOT NULL PRIMARY KEY,
-              jmeno VARCHAR(50) NOT NULL,
-              vek INT NOT NULL,
-              pohlavi INT(1),   -- Oracle nema bolean nakze napr Muž - 1, Žena - 0
-              misto_bydleni VARCHAR(50) NOT NULL
-          );
+        (
+            ID_hostitel VARCHAR(50) NOT NULL PRIMARY KEY,
+            jmeno VARCHAR(50) NOT NULL,
+            vek INT NOT NULL,
+            pohlavi INT(1),   -- Oracle nema bolean nakze napr Muž - 1, Žena - 0
+            misto_bydleni VARCHAR(50) NOT NULL
+        );
 
 CREATE TABLE rasa
-          (
-              ID_typ VARCHAR(50) NOT NULL PRIMARY KEY,
-              puvpd VARCHAR(50) NOT NULL,
-              max_delka_tesaku INT NOT NULL
-          );
+        (
+            ID_typ VARCHAR(50) NOT NULL PRIMARY KEY,
+            puvpd VARCHAR(50) NOT NULL,
+            max_delka_tesaku INT NOT NULL
+        );
 
 CREATE TABLE specificke_rysy
-          (
-              ID_rysy VARCHAR(50) NOT NULL PRIMARY KEY,
-              barva_oci VARCHAR(50) NOT NULL
-          );
-
---- TABULKY VAZEB ---------
-
-CREATE TABLE interval_pobytu
-          (
-              doba TIME NOT NULL PRIMARY KEY
-          );
-
-CREATE TABLE interval_vlastnictvi
-          (
-              doba TIME NOT NULL PRIMARY KEY
-          );
-
-CREATE TABLE nazyva
-          (
-              prezdivka VARCHAR(50) NOT NULL PRIMARY KEY
-          );
+        (
+            ID_rysy VARCHAR(50) NOT NULL PRIMARY KEY,
+            barva_oci VARCHAR(50) NOT NULL
+        );
 
 
 -- TABULKY M:N VAZEB --
 
-CREATE TABLE rysy_rasy
-        (
-            id_rasa VARCHAR(50) NOT NULL,
-            id_specialni_rysy VARCHAR(50) NOT NULL
-        );
-
-CREATE TABLE preference
-        (
-            id_typ_rasy VARCHAR(50) NOT NULL,
-            id_hostitele VARCHAR(50) NOT NULL
-        )
-
 CREATE TABLE pohyb_kocky
         (
-            id_kocky VARCHAR(160) NOT NULL,
-            id_teritoria VARCHAR(50) NOT NULL
+            interval_pobytu TIME NOT NULL,
+
+            id_kocky VARCHAR(160) NOT NULL, --FK kocky
+            id_teritoria VARCHAR(50) NOT NULL --Fk teritoria
         )
+
+CREATE TABLE interval_vlastnictvi
+        (
+            doba TIME NOT NULL PRIMARY KEY,
+
+            id_kocky VARCHAR(160) NOT NULL, --FK kocky
+            id_vlastnictvi VARCHAR(50) NOT NULL --FK vlastnictvi
+        );
+
+CREATE TABLE slouzi
+        (
+            prezdivka VARCHAR(50) NOT NULL PRIMARY KEY,
+
+            id_kocky VARCHAR(160) NOT NULL, --FK kocky
+            id_hostitele VARCHAR(50) NOT NULL --FK hostitel
+        );
+
+CREATE TABLE rysy_rasy
+        (
+            id_rasa VARCHAR(50) NOT NULL, -- FK rasy
+            id_specialni_rysy VARCHAR(50) NOT NULL -- FK
+        );
+
+
 
 ---
  ALTER TABLE kocka ADD CONSTRAINT fk_je_rasy FOREIGN KEY (typ_rasy) REFERENCES rasa;
