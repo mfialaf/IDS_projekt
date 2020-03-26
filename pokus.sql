@@ -1,3 +1,16 @@
+--- Smazani objektu pro novy start
+  DROP TABLE kocka        CASCADE CONSTRAINTS;
+  DROP TABLE zivot     CASCADE CONSTRAINTS;
+  DROP TABLE teritorium          CASCADE CONSTRAINTS;
+  DROP TABLE vlastnictvi          CASCADE CONSTRAINTS;
+  DROP TABLE hostitel        CASCADE CONSTRAINTS;
+  DROP TABLE rasa         CASCADE CONSTRAINTS;
+  DROP TABLE specificke_rysy         CASCADE CONSTRAINTS;
+  DROP TABLE interval_pobytu       CASCADE CONSTRAINTS;
+  DROP TABLE interval_vlastnictvi   CASCADE CONSTRAINTS;
+  DROP TABLE nazyva   CASCADE CONSTRAINTS;
+
+--- Tvorba tabulek
 CREATE TABLE kocka
           (
               hlavni_jmeno VARCHAR(160) NOT NULL PRIMARY KEY,
