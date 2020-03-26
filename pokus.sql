@@ -110,3 +110,33 @@ CREATE TABLE preference
 
 ---
  ALTER TABLE kocka ADD CONSTRAINT fk_je_rasy FOREIGN KEY (typ_rasy) REFERENCES rasa;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    --- Vsechny ID_neco upravit Varchar na 4!
+ INSERT INTO kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, typ_rasy) VALUES ('julca','BLK', 'fialova', 'Birma'); -- zmenit vzorek_kuze na VARCHAR
+ INSERT INTO zivot (ID_zivot, poradi, delka) VALUES ('Z123', '1', '13r254d'); -- regex na rok a dny
+ INSERT INTO teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T991', 'obyvacka', '20');
+ INSERT INTO vlastnictvi (ID_valstnictvi, typ_vlastnictvi, kvantita) VALUES ('V845', 'balonek', '3');
+ INSERT INTO hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H005', 'Pavel', '25', '1', 'Znojmo'); -- check na pohlavi, check na vek
+ INSERT INTO rasa (ID_typ, puvpd, max_delka_tesaku) VALUES ('R478', 'Egypt', '27'); -- opravit puvpd, regex na cm?
+ INSERT INTO specificke_rysy (ID_rysy, barva_oci) VALUES ('S247', 'zelena');
