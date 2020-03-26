@@ -82,5 +82,25 @@ CREATE TABLE nazyva
           );
 
 
+-- TABULKY M:N VAZEB --
+
+CREATE TABLE rysy_rasy
+        (
+            id_rasa VARCHAR(50) NOT NULL,
+            id_specialni_rysy VARCHAR(50) NOT NULL
+        );
+
+CREATE TABLE preference
+        (
+            id_typ_rasy VARCHAR(50) NOT NULL,
+            id_hostitele VARCHAR(50) NOT NULL
+        )
+
+CREATE TABLE pohyb_kocky
+        (
+            id_kocky VARCHAR(160) NOT NULL,
+            id_teritoria VARCHAR(50) NOT NULL
+        )
+
 ---
  ALTER TABLE kocka ADD CONSTRAINT fk_je_rasy FOREIGN KEY (typ_rasy) REFERENCES rasa;
