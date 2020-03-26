@@ -15,7 +15,9 @@ CREATE TABLE kocka
           (
               hlavni_jmeno VARCHAR(160) NOT NULL PRIMARY KEY,
               vzorek_kuze INT NOT NULL,
-              barva_srsti VARCHAR(50) NOT NULL
+              barva_srsti VARCHAR(50) NOT NULL,
+
+              typ_rasy VARCHAR(50) NOT NULL
           );
 
 CREATE TABLE zivot
@@ -77,4 +79,8 @@ CREATE TABLE interval_vlastnictvi
 CREATE TABLE nazyva
           (
               prezdivka VARCHAR(50) NOT NULL PRIMARY KEY
-          )
+          );
+
+
+---
+ ALTER TABLE kocka ADD CONSTRAINT fk_je_rasy FOREIGN KEY (typ_rasy) REFERENCES rasa;
