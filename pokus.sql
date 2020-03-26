@@ -25,7 +25,6 @@ CREATE TABLE zivot
             ID_zivot INT NOT NULL PRIMARY KEY, -- regex na max 9
             poradi INT NOT NULL,
             delka INT NOT NULL,
-            misto_narozeni VARCHAR(50) NOT NULL,
 
             id_kocky VARCHAR(160) NOT NULL -- FK kocky
         );
@@ -43,8 +42,7 @@ CREATE TABLE vlastnictvi
             typ_vlastnictvi VARCHAR(50) NOT NULL,
             kvantita INT NOT NULL,
 
-            id_hostitele VARCHAR(50) NOT NULL, -- FK hostitele
-            id_kocky VARCHAR(160) NOT NULL, -- FK kocky
+            id_hostitele VARCHAR(50), -- FK hostitele
             id_teritoria VARCHAR(50) NOT NULL -- FK teritoria
         );
 
@@ -75,34 +73,39 @@ CREATE TABLE specificke_rysy
 
 CREATE TABLE pohyb_kocky
         (
-            interval_pobytu TIME NOT NULL,
+            interval_pobytu VARCHAR(10) NOT NULL PRIMARY KEY, -- TIME????????
 
-            id_kocky VARCHAR(160) NOT NULL, --FK kocky
-            id_teritoria VARCHAR(50) NOT NULL --Fk teritoria
+            id_kocky VARCHAR(160) NOT NULL ON DELETE CASCADE, --FK kocky
+            id_teritoria VARCHAR(50) NOT NULL ON DELETE CASCADE --Fk teritoria
         )
 
 CREATE TABLE interval_vlastnictvi
         (
-            doba TIME NOT NULL PRIMARY KEY,
+            doba VARCHAR(10) NOT NULL PRIMARY KEY,
 
-            id_kocky VARCHAR(160) NOT NULL, --FK kocky
-            id_vlastnictvi VARCHAR(50) NOT NULL --FK vlastnictvi
+            id_kocky VARCHAR(160) NOT NULL ON DELETE CASCADE, --FK kocky
+            id_vlastnictvi VARCHAR(50) NOT NULL ON DELETE CASCADE --FK vlastnictvi
         );
 
 CREATE TABLE slouzi
         (
             prezdivka VARCHAR(50) NOT NULL PRIMARY KEY,
 
-            id_kocky VARCHAR(160) NOT NULL, --FK kocky
-            id_hostitele VARCHAR(50) NOT NULL --FK hostitel
+            id_kocky VARCHAR(160) NOT NULL ON DELETE CASCADE, --FK kocky
+            id_hostitele VARCHAR(50) NOT NULL ON DELETE CASCADE--FK hostitel
         );
 
 CREATE TABLE rysy_rasy
         (
-            id_rasa VARCHAR(50) NOT NULL, -- FK rasy
-            id_specialni_rysy VARCHAR(50) NOT NULL -- FK
+            id_rasy VARCHAR(50) NOT NULL ON DELETE CASCADE, -- FK rasy
+            id_rysy VARCHAR(50) NOT NULL ON DELETE CASCADE -- FK
         );
 
+CREATE TABLE preference
+        (
+            id_hostitele VARCHAR(50) NOT NULL ON DELETE CASCADE, -- FK hostitele
+            id_rasy VARCHAR(50) NOT NULL ON DELETE CASCADE -- FK rasy
+        )
 
 
 ---
