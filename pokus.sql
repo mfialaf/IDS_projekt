@@ -80,7 +80,7 @@ CREATE TABLE Pohyb_kocky
 
             ID_kocky VARCHAR(160) NOT NULL ON DELETE CASCADE, --FK kocky
             ID_teritoria VARCHAR(50) NOT NULL ON DELETE CASCADE --Fk teritoria
-        )
+        );
 
 CREATE TABLE Interval_vlastnictvi
         (
@@ -108,8 +108,23 @@ CREATE TABLE Preference
         (
             ID_hostitele VARCHAR(50) NOT NULL ON DELETE CASCADE, -- FK hostitele
             ID_rasy VARCHAR(50) NOT NULL ON DELETE CASCADE -- FK rasy
-        )
+        );
 
+-- GENERALIZACE/SPECIALIZACE --
+CREATE TABLE Minuly
+        (
+            ID_zivot INT NOT NULL, --FK zivot
+
+            zpusob_smrti VARCHAR(100) NOT NULL,
+            misto_narozeni VARCHAR(50) NOT NULL
+        );
+
+CREATE TABLE Aktualni
+        (
+            ID_zivot INT NOT NULL, -- FK zivot
+
+            misto_narozeni VARCHAR(50) NOT NULL
+        );
 
 ------- FK ------
 -- kocky --
@@ -136,8 +151,10 @@ CREATE TABLE Preference
 --preference--
     ALTER TABLE Preference ADD CONSTRAINT fk_hostitel FOREIGN KEY (ID_hostitele) REFERENCES Hostitel;
     ALTER TABLE Preference ADD CONSTRAINT fk_preferuje FOREIGN KEY (ID_rasy) REFERENCES Rasa;
-
-
+-- Minuly --
+    ALTER TABLE Minuly ADD CONSTRAINT fk_zil FOREIGN KEY (ID_zivot) REFERENCES Zivot;
+-- Aktualni --
+    ALTER TABLE Aktualni ADD CONSTRAINT fk_zije FOREIGN KEY (ID_zivot) REFERENCES Zivot;
 
 
 
