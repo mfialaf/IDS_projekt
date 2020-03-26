@@ -24,7 +24,7 @@ CREATE TABLE Kocka
 
 CREATE TABLE Zivot
         (
-            ID_zivot INT NOT NULL PRIMARY KEY, -- regex na max 9
+            ID_zivot VARCHAR(10) NOT NULL PRIMARY KEY, -- regex na max 9
             poradi INT NOT NULL,
             delka INT NOT NULL,
 
@@ -33,25 +33,25 @@ CREATE TABLE Zivot
 
 CREATE TABLE Teritorium
         (
-            ID_teritorium VARCHAR(50) NOT NULL PRIMARY KEY,
+            ID_teritorium VARCHAR(4) NOT NULL PRIMARY KEY,
             typ_teritoria VARCHAR(50) NOT NULL,
             kapacita_kocek INT NOT NULL
         );
 
 CREATE TABLE Vlastnictvi
         (
-            ID_valstnictvi VARCHAR(50) NOT NULL PRIMARY KEY,
+            ID_valstnictvi VARCHAR(4) NOT NULL PRIMARY KEY,
             typ_vlastnictvi VARCHAR(50) NOT NULL,
             kvantita INT NOT NULL,
 
-            ID_hostitele VARCHAR(50), -- FK hostitele
+            ID_hostitele VARCHAR(4), -- FK hostitele
             ID_kocky VARCHAR(160), -- FK kocky
-            ID_teritoria VARCHAR(50) NOT NULL -- FK teritoria
+            ID_teritoria VARCHAR(4) NOT NULL -- FK teritoria
         );
 
 CREATE TABLE Hostitel
         (
-            ID_hostitel VARCHAR(50) NOT NULL PRIMARY KEY,
+            ID_hostitel VARCHAR(4) NOT NULL PRIMARY KEY,
             jmeno VARCHAR(50) NOT NULL,
             vek INT NOT NULL,
             pohlavi INT(1),   -- Oracle nema bolean nakze napr Muž - 1, Žena - 0
@@ -60,14 +60,14 @@ CREATE TABLE Hostitel
 
 CREATE TABLE Rasa
         (
-            ID_typ VARCHAR(50) NOT NULL PRIMARY KEY,
-            puvpd VARCHAR(50) NOT NULL,
+            ID_rasy VARCHAR(4) NOT NULL PRIMARY KEY,
+            puvopd VARCHAR(50) NOT NULL,
             max_delka_tesaku INT NOT NULL
         );
 
 CREATE TABLE Specificke_rysy
         (
-            ID_rysy VARCHAR(50) NOT NULL PRIMARY KEY,
+            ID_rysy VARCHAR(4) NOT NULL PRIMARY KEY,
             barva_oci VARCHAR(50) NOT NULL
         );
 
@@ -79,7 +79,7 @@ CREATE TABLE Pohyb_kocky
             interval_pobytu VARCHAR(10) NOT NULL PRIMARY KEY, -- TIME????????
 
             ID_kocky VARCHAR(160) NOT NULL ON DELETE CASCADE, --FK kocky
-            ID_teritoria VARCHAR(50) NOT NULL ON DELETE CASCADE --Fk teritoria
+            ID_teritoria VARCHAR(4) NOT NULL ON DELETE CASCADE --Fk teritoria
         );
 
 CREATE TABLE Interval_vlastnictvi
@@ -87,7 +87,7 @@ CREATE TABLE Interval_vlastnictvi
             doba VARCHAR(10) NOT NULL PRIMARY KEY,
 
             ID_kocky VARCHAR(160) NOT NULL ON DELETE CASCADE, --FK kocky
-            ID_vlastnictvi VARCHAR(50) NOT NULL ON DELETE CASCADE --FK vlastnictvi
+            ID_vlastnictvi VARCHAR(4) NOT NULL ON DELETE CASCADE --FK vlastnictvi
         );
 
 CREATE TABLE Slouzi
@@ -95,19 +95,19 @@ CREATE TABLE Slouzi
             prezdivka VARCHAR(50) NOT NULL PRIMARY KEY,
 
             ID_kocky VARCHAR(160) NOT NULL ON DELETE CASCADE, --FK kocky
-            ID_hostitele VARCHAR(50) NOT NULL ON DELETE CASCADE--FK hostitel
+            ID_hostitele VARCHAR(4) NOT NULL ON DELETE CASCADE--FK hostitel
         );
 
 CREATE TABLE Rysy_rasy
         (
-            ID_rasy VARCHAR(50) NOT NULL ON DELETE CASCADE, -- FK rasy
-            ID_rysy VARCHAR(50) NOT NULL ON DELETE CASCADE -- FK
+            ID_rasy VARCHAR(4) NOT NULL ON DELETE CASCADE, -- FK rasy
+            ID_rysy VARCHAR(50) NOT NULL ON DELETE CASCADE -- FK     --------------- tady nevim jestli dat 4 nebo ne
         );
 
 CREATE TABLE Preference
         (
-            ID_hostitele VARCHAR(50) NOT NULL ON DELETE CASCADE, -- FK hostitele
-            ID_rasy VARCHAR(50) NOT NULL ON DELETE CASCADE -- FK rasy
+            ID_hostitele VARCHAR(4) NOT NULL ON DELETE CASCADE, -- FK hostitele
+            ID_rasy VARCHAR(4) NOT NULL ON DELETE CASCADE -- FK rasy
         );
 
 -- GENERALIZACE/SPECIALIZACE --
@@ -175,11 +175,26 @@ CREATE TABLE Aktualni
 
 
 
-    --- Vsechny ID_neco upravit Varchar na 4!
- INSERT INTO kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, typ_rasy) VALUES ('julca','BLK', 'fialova', 'Birma'); -- zmenit vzorek_kuze na VARCHAR
- INSERT INTO zivot (ID_zivot, poradi, delka) VALUES ('Z123', '1', '13r254d'); -- regex na rok a dny
- INSERT INTO teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T991', 'obyvacka', '20');
- INSERT INTO vlastnictvi (ID_valstnictvi, typ_vlastnictvi, kvantita) VALUES ('V845', 'balonek', '3');
- INSERT INTO hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H005', 'Pavel', '25', '1', 'Znojmo'); -- check na pohlavi, check na vek
- INSERT INTO rasa (ID_typ, puvpd, max_delka_tesaku) VALUES ('R478', 'Egypt', '27'); -- opravit puvpd, regex na cm?
- INSERT INTO specificke_rysy (ID_rysy, barva_oci) VALUES ('S247', 'zelena');
+ INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, typ_rasy) VALUES ('julca','BLK', 'fialova', 'Birma');
+ INSERT INTO Zivot (ID_zivot, poradi, delka) VALUES ('Z123', '1', '13r254d'); -- regex na rok a dny
+ INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T991', 'obyvacka', '20');
+ INSERT INTO Vlastnictvi (ID_valstnictvi, typ_vlastnictvi, kvantita) VALUES ('V845', 'balonek', '3');
+ INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H005', 'Pavel', '25', '1', 'Znojmo');
+ INSERT INTO Rasa (ID_rasy, puvod, max_delka_tesaku) VALUES ('R478', 'Egypt', '27'); -- regex na cm?
+ INSERT INTO Specificke_rysy (ID_rysy, barva_oci) VALUES ('S247', 'zelena');
+
+
+
+---- CHECKy
+ ALTER TABLE Hostitel ADD CONSTRAINT check_pohlavi CHECK ((pohlavi = 0) OR (pohlavi = 1));
+ ALTER TABLE Hostitel ADD CONSTRAINT check_vek CHECK ((vek >= 1) AND (vek <= 130));
+
+ ALTER TABLE Zivot ADD CONSTRAINT check_ID CHECK (REGEXP_LIKE(ID_zivot,'Z[0-9]{3}'));
+ ALTER TABLE Teritorium ADD CONSTRAINT check_ID CHECK (REGEXP_LIKE(ID_teritorium,'T[0-9]{3}'));
+ ALTER TABLE Vlastnictvi ADD CONSTRAINT check_ID CHECK (REGEXP_LIKE(ID_valstnictvi,'V[0-9]{3}'));
+ ALTER TABLE Hostitel ADD CONSTRAINT check_ID CHECK (REGEXP_LIKE(ID_hostitel,'H[0-9]{3}'));
+ ALTER TABLE Rasa ADD CONSTRAINT check_ID CHECK (REGEXP_LIKE(ID_rasy,'R[0-9]{3}'));
+ ALTER TABLE Specificke_rysy ADD CONSTRAINT check_ID CHECK (REGEXP_LIKE(ID_zivot,'S[0-9]{3}'));
+
+
+
