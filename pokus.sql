@@ -78,36 +78,36 @@ CREATE TABLE Pohyb_kocky
         (
             interval_pobytu VARCHAR(10) NOT NULL PRIMARY KEY, -- TIME????????
 
-            ID_kocky VARCHAR(160) NOT NULL ON DELETE CASCADE, --FK kocky
-            ID_teritoria VARCHAR(4) NOT NULL ON DELETE CASCADE --Fk teritoria
+            ID_kocky VARCHAR(160) NOT NULL, --FK kocky
+            ID_teritoria VARCHAR(4) NOT NULL  --Fk teritoria
         );
 
 CREATE TABLE Interval_vlastnictvi
         (
             doba VARCHAR(10) NOT NULL PRIMARY KEY,
 
-            ID_kocky VARCHAR(160) NOT NULL ON DELETE CASCADE, --FK kocky
-            ID_vlastnictvi VARCHAR(4) NOT NULL ON DELETE CASCADE --FK vlastnictvi
+            ID_kocky VARCHAR(160) NOT NULL, --FK kocky
+            ID_vlastnictvi VARCHAR(4) NOT NULL  --FK vlastnictvi
         );
 
 CREATE TABLE Slouzi
         (
             prezdivka VARCHAR(50) NOT NULL PRIMARY KEY,
 
-            ID_kocky VARCHAR(160) NOT NULL ON DELETE CASCADE, --FK kocky
-            ID_hostitele VARCHAR(4) NOT NULL ON DELETE CASCADE--FK hostitel
+            ID_kocky VARCHAR(160) NOT NULL, --FK kocky
+            ID_hostitele VARCHAR(4) NOT NULL --FK hostitel
         );
 
 CREATE TABLE Rysy_rasy
         (
-            ID_rasy VARCHAR(4) NOT NULL ON DELETE CASCADE, -- FK rasy
-            ID_rysy VARCHAR(50) NOT NULL ON DELETE CASCADE -- FK     --------------- tady nevim jestli dat 4 nebo ne
+            ID_rasy VARCHAR(4) NOT NULL, -- FK rasy
+            ID_rysy VARCHAR(50) NOT NULL  -- FK     --------------- tady nevim jestli dat 4 nebo ne
         );
 
 CREATE TABLE Preference
         (
-            ID_hostitele VARCHAR(4) NOT NULL ON DELETE CASCADE, -- FK hostitele
-            ID_rasy VARCHAR(4) NOT NULL ON DELETE CASCADE -- FK rasy
+            ID_hostitele VARCHAR(4) NOT NULL, -- FK hostitele
+            ID_rasy VARCHAR(4) NOT NULL  -- FK rasy
         );
 
 -- GENERALIZACE/SPECIALIZACE --
@@ -130,7 +130,7 @@ CREATE TABLE Aktualni
 -- kocky --
     ALTER TABLE Kocka ADD CONSTRAINT fk_je_rasy FOREIGN KEY (typ_rasy) REFERENCES Rasa;
 -- zivot --
-    ALTER TABLE Zivot ADD CONSTRAINT fk_ma_kocku FOREIGN KEY (id_kocky) REFERENCES Kocka;
+    ALTER TABLE Zivot ADD CONSTRAINT fk_ma_kocku FOREIGN KEY (ID_kocky) REFERENCES Kocka;
 -- vlastnictvi --
     ALTER TABLE Vlastnictvi ADD CONSTRAINT fk_je_propujceno FOREIGN KEY (ID_hostitele) REFERENCES Hostitel;
     ALTER TABLE Vlastnictvi ADD CONSTRAINT fk_ma FOREIGN KEY (ID_kocky) REFERENCES Kocka;
