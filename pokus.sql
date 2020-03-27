@@ -11,6 +11,8 @@
   DROP TABLE Slouzi                 CASCADE CONSTRAINTS;
   DROP TABLE Rysy_rasy              CASCADE CONSTRAINTS;
   DROP TABLE Preference             CASCADE CONSTRAINTS;
+  DROP TABLE Minuly                 CASCADE CONSTRAINTS;
+  DROP TABLE Aktualni               CASCADE CONSTRAINTS;
 
 --- Tvorba tabulek
 CREATE TABLE Kocka
@@ -54,7 +56,7 @@ CREATE TABLE Hostitel
             ID_hostitel VARCHAR(4) NOT NULL PRIMARY KEY,
             jmeno VARCHAR(50) NOT NULL,
             vek INT NOT NULL,
-            pohlavi INT(1),   -- Oracle nema bolean nakze napr Muž - 1, Žena - 0
+            pohlavi INT NOT NULL,   -- Oracle nema bolean nakze napr Muž - 1, Žena - 0
             misto_bydleni VARCHAR(50) NOT NULL
         );
 
@@ -137,11 +139,11 @@ CREATE TABLE Aktualni
     ALTER TABLE Vlastnictvi ADD CONSTRAINT fk_se_nachazi FOREIGN KEY (ID_teritoria) REFERENCES Teritorium;
 -- M:N vazby --
 --pohyb_kocky--
-    ALTER TABLE Pohyb_kocky ADD CONSTRAINT fk_se_pohybuje FOREIGN KEY (ID_kocky) REFERENCES Kocky;
+    ALTER TABLE Pohyb_kocky ADD CONSTRAINT fk_se_pohybuje FOREIGN KEY (ID_kocky) REFERENCES Kocka;
     ALTER TABLE Pohyb_kocky ADD CONSTRAINT fk_v_prostredi FOREIGN KEY (ID_teritoria) REFERENCES Teritorium;
 --interval_vlastnictvi--
     ALTER TABLE Interval_vlastnictvi ADD CONSTRAINT fk_je_vlastneno FOREIGN KEY (ID_kocky) REFERENCES Kocka;
-    ALTER TABLE Interval_vlastnictvi ADD CONSTRAINT fk_je_propujceno FOREIGN KEY (ID_vlastnictvi) REFERENCES Vlastnictvi;
+    ALTER TABLE Interval_vlastnictvi ADD CONSTRAINT fk_pripada FOREIGN KEY (ID_vlastnictvi) REFERENCES Vlastnictvi;
 --slouzi--
     ALTER TABLE Slouzi ADD CONSTRAINT fk_slouzi FOREIGN KEY (ID_kocky) REFERENCES Kocka;
     ALTER TABLE Slouzi ADD CONSTRAINT fk_je_panem FOREIGN KEY (ID_hostitele) REFERENCES Hostitel;
