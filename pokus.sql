@@ -46,8 +46,8 @@ CREATE TABLE Vlastnictvi
             typ_vlastnictvi VARCHAR(50) NOT NULL,
             kvantita INT NOT NULL,
 
-            ID_hostitele VARCHAR(4), -- FK hostitele
-            jmeno_kocky VARCHAR(160), -- FK kocky
+            ID_hostitele VARCHAR(4), -- FK hostitele --NOT NULL zde chybi protoze se jedna o vazbu 0-1, tudiz muze nastat ze zda vazba nebude
+            jmeno_kocky VARCHAR(160), -- FK kocky    --Zde se jedna o stejny pripad
             ID_teritoria VARCHAR(4) NOT NULL -- FK teritoria
         );
 
@@ -118,7 +118,7 @@ CREATE TABLE Minuly
             ID_zivot VARCHAR(4) NOT NULL, --FK zivot
 
             zpusob_smrti VARCHAR(100) NOT NULL,
-            misto_narozeni VARCHAR(50) NOT NULL
+            misto_umrti VARCHAR(50) NOT NULL
         );
 
 CREATE TABLE Aktualni
