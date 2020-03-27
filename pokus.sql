@@ -61,7 +61,7 @@ CREATE TABLE Hostitel
 CREATE TABLE Rasa
         (
             ID_rasy VARCHAR(4) NOT NULL PRIMARY KEY,
-            puvopd VARCHAR(50) NOT NULL,
+            puvod VARCHAR(50) NOT NULL,
             max_delka_tesaku INT NOT NULL
         );
 
@@ -189,12 +189,12 @@ CREATE TABLE Aktualni
  ALTER TABLE Hostitel ADD CONSTRAINT check_pohlavi CHECK ((pohlavi = 0) OR (pohlavi = 1));
  ALTER TABLE Hostitel ADD CONSTRAINT check_vek CHECK ((vek >= 1) AND (vek <= 130));
 
- ALTER TABLE Zivot ADD CONSTRAINT check_ID CHECK (REGEXP_LIKE(ID_zivot,'Z[0-9]{3}'));
- ALTER TABLE Teritorium ADD CONSTRAINT check_ID CHECK (REGEXP_LIKE(ID_teritorium,'T[0-9]{3}'));
- ALTER TABLE Vlastnictvi ADD CONSTRAINT check_ID CHECK (REGEXP_LIKE(ID_valstnictvi,'V[0-9]{3}'));
- ALTER TABLE Hostitel ADD CONSTRAINT check_ID CHECK (REGEXP_LIKE(ID_hostitel,'H[0-9]{3}'));
- ALTER TABLE Rasa ADD CONSTRAINT check_ID CHECK (REGEXP_LIKE(ID_rasy,'R[0-9]{3}'));
- ALTER TABLE Specificke_rysy ADD CONSTRAINT check_ID CHECK (REGEXP_LIKE(ID_zivot,'S[0-9]{3}'));
+ ALTER TABLE Zivot ADD CONSTRAINT check_ID_1 CHECK (REGEXP_LIKE(ID_zivot,'Z[0-9]{3}'));
+ ALTER TABLE Teritorium ADD CONSTRAINT check_ID_2 CHECK (REGEXP_LIKE(ID_teritorium,'T[0-9]{3}'));
+ ALTER TABLE Vlastnictvi ADD CONSTRAINT check_ID_3 CHECK (REGEXP_LIKE(ID_valstnictvi,'V[0-9]{3}'));
+ ALTER TABLE Hostitel ADD CONSTRAINT check_ID_4 CHECK (REGEXP_LIKE(ID_hostitel,'H[0-9]{3}'));
+ ALTER TABLE Rasa ADD CONSTRAINT check_ID_5 CHECK (REGEXP_LIKE(ID_rasy,'R[0-9]{3}'));
+ ALTER TABLE Specificke_rysy ADD CONSTRAINT check_ID_6 CHECK (REGEXP_LIKE(ID_rysy,'S[0-9]{3}'));
 
 
 
