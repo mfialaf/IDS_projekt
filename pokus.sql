@@ -64,7 +64,7 @@ CREATE TABLE Rasa
         (
             ID_rasy VARCHAR(4) NOT NULL PRIMARY KEY,
             puvod VARCHAR(50) NOT NULL,
-            max_delka_tesaku INT NOT NULL
+            max_delka_tesaku VARCHAR(4) NOT NULL
         );
 
 CREATE TABLE Specificke_rysy
@@ -167,6 +167,19 @@ CREATE TABLE Aktualni
 
 
 
+---- CHECKy
+ ALTER TABLE Hostitel ADD CONSTRAINT check_pohlavi CHECK ((pohlavi = 0) OR (pohlavi = 1));
+ ALTER TABLE Hostitel ADD CONSTRAINT check_vek CHECK ((vek >= 1) AND (vek <= 130));
+ ALTER TABLE Zivot ADD CONSTRAINT check_pocet_zivotu CHECK ((poradi >= 1) AND (poradi <= 9));
+ ALTER TABLE Zivot ADD CONSTRAINT check_zapis_zivota CHECK (REGEXP_LIKE(delka, '^([0-9]{1,2}[r,R]){0,1}(([0-9]{1,2}|[1-2][0-9]{2}|[3][0-6][0-5])[d,D]){0,1}$'));
+ ALTER TABLE Rasa ADD CONSTRAINT check_cm CHECK (REGEXP_LIKE(max_delka_tesaku, '^[0-9]{1,2}[c,C][m,M]$'));
+
+ ALTER TABLE Zivot ADD CONSTRAINT check_ID_1 CHECK (REGEXP_LIKE(ID_zivot,'Z[0-9]{3}'));
+ ALTER TABLE Teritorium ADD CONSTRAINT check_ID_2 CHECK (REGEXP_LIKE(ID_teritorium,'T[0-9]{3}'));
+ ALTER TABLE Vlastnictvi ADD CONSTRAINT check_ID_3 CHECK (REGEXP_LIKE(ID_vlastnictvi,'V[0-9]{3}'));
+ ALTER TABLE Hostitel ADD CONSTRAINT check_ID_4 CHECK (REGEXP_LIKE(ID_hostitel,'H[0-9]{3}'));
+ ALTER TABLE Rasa ADD CONSTRAINT check_ID_5 CHECK (REGEXP_LIKE(ID_rasy,'R[0-9]{3}'));
+ ALTER TABLE Specificke_rysy ADD CONSTRAINT check_ID_6 CHECK (REGEXP_LIKE(ID_rysy,'S[0-9]{3}'));
 
 
 
@@ -175,7 +188,7 @@ CREATE TABLE Aktualni
 
 
 
-INSERT INTO Rasa (ID_rasy, puvod, max_delka_tesaku) VALUES ('R478', 'Egypt', 27);
+INSERT INTO Rasa (ID_rasy, puvod, max_delka_tesaku) VALUES ('R478', 'Egypt', '27cm');
 INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('julca','BLK', 'fialova', 'R478');
 INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z123', 1, '13r254d', 'julca');
 INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T991', 'obyvacka', 20);
@@ -185,18 +198,6 @@ INSERT INTO Specificke_rysy (ID_rysy, barva_oci) VALUES ('S247', 'zelena');
 
 
 
----- CHECKy
- ALTER TABLE Hostitel ADD CONSTRAINT check_pohlavi CHECK ((pohlavi = 0) OR (pohlavi = 1));
- ALTER TABLE Hostitel ADD CONSTRAINT check_vek CHECK ((vek >= 1) AND (vek <= 130));
- ALTER TABLE Zivot ADD CONSTRAINT check_pocet_zivotu CHECK ((poradi >= 1) AND (poradi <= 9));
- ALTER TABLE Zivot ADD CONSTRAINT check_zapis_zivota CHECK (REGEXP_LIKE(delka, '^([0-9]{1,2}[r,R]){0,1}(([0-9]{1,2}|[1-2][0-9]{2}|[3][0-6][0-5])[d,D]){0,1}$'));
-
- ALTER TABLE Zivot ADD CONSTRAINT check_ID_1 CHECK (REGEXP_LIKE(ID_zivot,'Z[0-9]{3}'));
- ALTER TABLE Teritorium ADD CONSTRAINT check_ID_2 CHECK (REGEXP_LIKE(ID_teritorium,'T[0-9]{3}'));
- ALTER TABLE Vlastnictvi ADD CONSTRAINT check_ID_3 CHECK (REGEXP_LIKE(ID_vlastnictvi,'V[0-9]{3}'));
- ALTER TABLE Hostitel ADD CONSTRAINT check_ID_4 CHECK (REGEXP_LIKE(ID_hostitel,'H[0-9]{3}'));
- ALTER TABLE Rasa ADD CONSTRAINT check_ID_5 CHECK (REGEXP_LIKE(ID_rasy,'R[0-9]{3}'));
- ALTER TABLE Specificke_rysy ADD CONSTRAINT check_ID_6 CHECK (REGEXP_LIKE(ID_rysy,'S[0-9]{3}'));
 
 
 
