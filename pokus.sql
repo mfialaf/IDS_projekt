@@ -175,14 +175,13 @@ CREATE TABLE Aktualni
 
 
 
-
- INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('julca','BLK', 'fialova', 'R478');
- INSERT INTO Zivot (ID_zivot, poradi, delka, ID_kocky) VALUES ('Z123', '1', '13r254d', 'julca'); -- regex na rok a dny
- INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T991', 'obyvacka', '20');
- INSERT INTO Vlastnictvi (ID_valstnictvi, typ_vlastnictvi, kvantita, ID_hostitele, ID_kocky, ID_teritoria) VALUES ('V845', 'balonek', '3', 'H005', 'julca', 'T991');
- INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H005', 'Pavel', '25', '1', 'Znojmo');
- INSERT INTO Rasa (ID_rasy, puvod, max_delka_tesaku) VALUES ('R478', 'Egypt', '27'); -- regex na cm?
- INSERT INTO Specificke_rysy (ID_rysy, barva_oci) VALUES ('S247', 'zelena');
+INSERT INTO Rasa (ID_rasy, puvod, max_delka_tesaku) VALUES ('R478', 'Egypt', '27'); -- regex na cm?
+INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('julca','BLK', 'fialova', 'R478');
+INSERT INTO Zivot (ID_zivot, poradi, delka, ID_kocky) VALUES ('Z123', '1', '13r254d', 'julca'); -- regex na rok a dny
+INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T991', 'obyvacka', '20');
+INSERT INTO Vlastnictvi (ID_valstnictvi, typ_vlastnictvi, kvantita, ID_hostitele, ID_kocky, ID_teritoria) VALUES ('V845', 'balonek', '3', 'H005', 'julca', 'T991');
+INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H005', 'Pavel', '25', '1', 'Znojmo');
+INSERT INTO Specificke_rysy (ID_rysy, barva_oci) VALUES ('S247', 'zelena');
 
 
 
