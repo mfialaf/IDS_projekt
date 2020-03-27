@@ -21,7 +21,7 @@ CREATE TABLE Kocka
             vzorek_kuze VARCHAR(10) NOT NULL,
             barva_srsti VARCHAR(50) NOT NULL,
 
-            typ_rasy VARCHAR(50) NOT NULL --FK rasy
+            ID_rasy VARCHAR(4) NOT NULL --FK rasy
         );
 
 CREATE TABLE Zivot
@@ -115,7 +115,7 @@ CREATE TABLE Preference
 -- GENERALIZACE/SPECIALIZACE --
 CREATE TABLE Minuly
         (
-            ID_zivot INT NOT NULL, --FK zivot
+            ID_zivot VARCHAR(4) NOT NULL, --FK zivot
 
             zpusob_smrti VARCHAR(100) NOT NULL,
             misto_narozeni VARCHAR(50) NOT NULL
@@ -123,14 +123,14 @@ CREATE TABLE Minuly
 
 CREATE TABLE Aktualni
         (
-            ID_zivot INT NOT NULL, -- FK zivot
+            ID_zivot VARCHAR(4) NOT NULL, -- FK zivot
 
             misto_narozeni VARCHAR(50) NOT NULL
         );
 
 ------- FK ------
 -- kocky --
-    ALTER TABLE Kocka ADD CONSTRAINT fk_je_rasy FOREIGN KEY (typ_rasy) REFERENCES Rasa;
+    ALTER TABLE Kocka ADD CONSTRAINT fk_je_rasy FOREIGN KEY (ID_rasy) REFERENCES Rasa;
 -- zivot --
     ALTER TABLE Zivot ADD CONSTRAINT fk_ma_kocku FOREIGN KEY (ID_kocky) REFERENCES Kocka;
 -- vlastnictvi --
@@ -176,7 +176,7 @@ CREATE TABLE Aktualni
 
 
 
- INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, typ_rasy) VALUES ('julca','BLK', 'fialova', 'Birma');
+ INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('julca','BLK', 'fialova', 'R478');
  INSERT INTO Zivot (ID_zivot, poradi, delka, ID_kocky) VALUES ('Z123', '1', '13r254d', 'julca'); -- regex na rok a dny
  INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T991', 'obyvacka', '20');
  INSERT INTO Vlastnictvi (ID_valstnictvi, typ_vlastnictvi, kvantita, ID_hostitele, ID_kocky, ID_teritoria) VALUES ('V845', 'balonek', '3', 'H005', 'julca', 'T991');
