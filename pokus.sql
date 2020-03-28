@@ -196,7 +196,6 @@ INSERT INTO Rasa (ID_rasy, puvod, max_delka_tesaku) VALUES ('R002', 'Cesko', '12
 INSERT INTO Rasa (ID_rasy, puvod, max_delka_tesaku) VALUES ('R125', 'Cina', '15cm');
 INSERT INTO Rasa (ID_rasy, puvod, max_delka_tesaku) VALUES ('R457', 'Nemecko', '7cm');
 INSERT INTO Rasa (ID_rasy, puvod, max_delka_tesaku) VALUES ('R521', 'Italie', '6cm');
-
 INSERT INTO Rasa (ID_rasy, puvod, max_delka_tesaku) VALUES ('R244', 'Izrael', '2cm');
 INSERT INTO Rasa (ID_rasy, puvod, max_delka_tesaku) VALUES ('R123', 'Pakistan', '9cm');
 INSERT INTO Rasa (ID_rasy, puvod, max_delka_tesaku) VALUES ('R777', 'Egypt', '11cm');
@@ -257,7 +256,6 @@ INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('
 INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H958', 'Rebeka', 32, 'zena', 'Hradec Kralove');
 INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H003', 'Lukas', 45, 'muz', 'LA');
 INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H333', 'Michaela', 77, 'zena', 'Zlin');
-
 
 --INSERT typu vlastnictvi--
 INSERT INTO Vlastnictvi (ID_vlastnictvi, typ_vlastnictvi, kvantita, ID_hostitele, jmeno_kocky, ID_teritoria) VALUES ('V001', 'balonek', 3, 'H001', 'julca', 'T001');
@@ -330,7 +328,6 @@ INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R777', 'S132');
 INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R410', 'S004');
 INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R624', 'S007');
 
-
 --INSERT jakou rasu dany hostitel preferuje--
 INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H001', 'R001');
 INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H002', 'R457');
@@ -343,7 +340,6 @@ INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H958', 'R125');
 INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H003', 'R777');
 INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H333', 'R410');
 
-
 --INSERT data o aktualnim zivote kocky--
 INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z003', 'T001');
 INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z002', 'T156');
@@ -354,7 +350,6 @@ INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z104', 'T003');
 INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z106', 'T103');
 INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z107', 'T420');
 INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z197', 'T177');
-
 
 --INSERT data o minulem zivote kocky--
 INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z001', 'Prejeta autem.' ,'T546');
