@@ -83,7 +83,7 @@ CREATE TABLE Specificke_rysy
 
 CREATE TABLE Pohyb_kocky
         (
-            interval_pobytu VARCHAR(10) NOT NULL PRIMARY KEY,
+            interval_pobytu VARCHAR(10) NOT NULL,
 
             jmeno_kocky VARCHAR(160) NOT NULL, --FK kocky
             ID_teritoria VARCHAR(4) NOT NULL  --Fk teritoria
@@ -91,7 +91,7 @@ CREATE TABLE Pohyb_kocky
 
 CREATE TABLE Interval_vlastnictvi
         (   
-            doba VARCHAR(10) NOT NULL PRIMARY KEY,
+            doba VARCHAR(10) NOT NULL,
 
             jmeno_kocky VARCHAR(160) NOT NULL, --FK kocky
             ID_vlastnictvi VARCHAR(4) NOT NULL  --FK vlastnictvi
@@ -99,7 +99,7 @@ CREATE TABLE Interval_vlastnictvi
 
 CREATE TABLE Slouzi
         (
-            prezdivka VARCHAR(50) NOT NULL PRIMARY KEY,
+            prezdivka VARCHAR(50) NOT NULL,
 
             jmeno_kocky VARCHAR(160) NOT NULL, --FK kocky
             ID_hostitele VARCHAR(4) NOT NULL --FK hostitel
@@ -284,7 +284,7 @@ INSERT INTO Specificke_rysy (ID_rysy, barva_oci) VALUES ('S007', 'svetle modra')
 --INSERT pohybu kocky--
 INSERT INTO Pohyb_kocky (interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('324d', 'packa', 'T001');
 INSERT INTO Pohyb_kocky (interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('54d', 'julca', 'T001');
-INSERT INTO Pohyb_kocky (interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('2d', 'micka', 'T002');
+INSERT INTO Pohyb_kocky (interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('178d', 'micka', 'T002');
 INSERT INTO Pohyb_kocky (interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('1r244d', 'fous', 'T991');
 INSERT INTO Pohyb_kocky (interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('2r', 'tlapka', 'T156');
 INSERT INTO Pohyb_kocky (interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('10d', 'max', 'T177');
@@ -297,7 +297,7 @@ INSERT INTO Pohyb_kocky (interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('29
 INSERT INTO Interval_vlastnictvi (doba, jmeno_kocky, ID_vlastnictvi) VALUES ('324d', 'julca', 'V001');
 INSERT INTO Interval_vlastnictvi (doba, jmeno_kocky, ID_vlastnictvi) VALUES ('54d', 'julca', 'V002');
 INSERT INTO Interval_vlastnictvi (doba, jmeno_kocky, ID_vlastnictvi) VALUES ('1r25d', 'micka', 'V269');
-INSERT INTO Interval_vlastnictvi (doba, jmeno_kocky, ID_vlastnictvi) VALUES ('4d', 'tlapka', 'V400');
+INSERT INTO Interval_vlastnictvi (doba, jmeno_kocky, ID_vlastnictvi) VALUES ('2d', 'tlapka', 'V400');
 INSERT INTO Interval_vlastnictvi (doba, jmeno_kocky, ID_vlastnictvi) VALUES ('15d', 'max', 'V300');
 INSERT INTO Interval_vlastnictvi (doba, jmeno_kocky, ID_vlastnictvi) VALUES ('1d', 'silva', 'V444');
 INSERT INTO Interval_vlastnictvi (doba, jmeno_kocky, ID_vlastnictvi) VALUES ('39d', 'pan zvon', 'V298');
@@ -313,7 +313,7 @@ INSERT INTO Slouzi (prezdivka, jmeno_kocky, ID_hostitele) VALUES ('milacek', 'tl
 INSERT INTO Slouzi (prezdivka, jmeno_kocky, ID_hostitele) VALUES ('slinta', 'max', 'H855');
 INSERT INTO Slouzi (prezdivka, jmeno_kocky, ID_hostitele) VALUES ('lizal', 'dextr', 'H333');
 INSERT INTO Slouzi (prezdivka, jmeno_kocky, ID_hostitele) VALUES ('fantom', 'silva', 'H003');
-INSERT INTO Slouzi (prezdivka, jmeno_kocky, ID_hostitele) VALUES ('jarda', 'richie', 'H150');
+INSERT INTO Slouzi (prezdivka, jmeno_kocky, ID_hostitele) VALUES ('zrout', 'richie', 'H150');
 INSERT INTO Slouzi (prezdivka, jmeno_kocky, ID_hostitele) VALUES ('lenoch', 'pan zvon', 'H055');
 
 --INSERT specifickych rysu dane rasy--
