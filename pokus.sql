@@ -83,7 +83,7 @@ CREATE TABLE Specificke_rysy
 
 CREATE TABLE Pohyb_kocky
         (
-            interval_pobytu VARCHAR(10) NOT NULL,
+            interval_pobytu VARCHAR(10) NOT NULL PRIMARY KEY, -- pridan PK.. OPRVAVA
 
             jmeno_kocky VARCHAR(160) NOT NULL, --FK kocky
             ID_teritoria VARCHAR(4) NOT NULL  --Fk teritoria
@@ -91,7 +91,7 @@ CREATE TABLE Pohyb_kocky
 
 CREATE TABLE Interval_vlastnictvi
         (   
-            doba VARCHAR(10) NOT NULL,
+            doba VARCHAR(10) NOT NULL PRIMARY KEY, -- pridan PK.. OPRVAVA
 
             jmeno_kocky VARCHAR(160) NOT NULL, --FK kocky
             ID_vlastnictvi VARCHAR(4) NOT NULL  --FK vlastnictvi
@@ -99,7 +99,7 @@ CREATE TABLE Interval_vlastnictvi
 
 CREATE TABLE Slouzi
         (
-            prezdivka VARCHAR(50) NOT NULL,
+            prezdivka VARCHAR(50) NOT NULL PRIMARY KEY, -- pridan PK.. OPRVAVA
 
             jmeno_kocky VARCHAR(160) NOT NULL, --FK kocky
             ID_hostitele VARCHAR(4) NOT NULL --FK hostitel
@@ -107,7 +107,7 @@ CREATE TABLE Slouzi
 
 CREATE TABLE Rysy_rasy
         (
-            ID_rasy VARCHAR(4) NOT NULL, -- FK rasy
+            ID_rasy VARCHAR(4) NOT NULL, -- FK rasy  -- ZDE NEVIM JESTLI PRIDAT PK???
             ID_rysy VARCHAR(50) NOT NULL  -- FK
         );
 
@@ -360,4 +360,11 @@ INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z102', 'pad ze
 INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z105', 'zakousnuta jinou kockou' ,'T111');
 INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z187', 'smrt leknutim' ,'T420');
 
-
+---------------------------------------------------------- SELECT ------------------------------------------------------
+--SQL skript obsahující dotazy SELECT musí obsahovat:
+--  1. konkrétně alespoň dva dotazy využívající spojení dvou tabulek,
+--  2. jeden využívající spojení tří tabulek,
+--  3. dva dotazy s klauzulí GROUP BY a agregační funkcí,
+--  4. jeden dotaz obsahující predikát EXISTS
+--  5. a jeden dotaz s predikátem IN s vnořeným selectem (nikoliv IN s množinou konstantních dat).
+--  - U každého z dotazů musí být (v komentáři SQL kódu) popsáno srozumitelně, jaká data hledá daný dotaz (jaká je jeho funkce v aplikaci).
