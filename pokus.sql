@@ -83,7 +83,8 @@ CREATE TABLE Specificke_rysy
 
 CREATE TABLE Pohyb_kocky
         (
-            interval_pobytu VARCHAR(10) NOT NULL PRIMARY KEY, -- pridan PK.. OPRVAVA
+            ID_pohyb_kocky VARCHAR(5) NOT NULL PRIMARY KEY,
+            interval_pobytu VARCHAR(10) NOT NULL, -- pridan PK.. OPRVAVA
 
             jmeno_kocky VARCHAR(160) NOT NULL, --FK kocky
             ID_teritoria VARCHAR(4) NOT NULL  --Fk teritoria
@@ -107,7 +108,7 @@ CREATE TABLE Slouzi
 
 CREATE TABLE Rysy_rasy
         (
-            ID_rasy VARCHAR(4) NOT NULL, -- FK rasy  -- ZDE NEVIM JESTLI PRIDAT PK???
+            ID_rasy VARCHAR(4) NOT NULL, -- FK rasy
             ID_rysy VARCHAR(50) NOT NULL  -- FK
         );
 
@@ -123,7 +124,7 @@ CREATE TABLE Minuly
             ID_zivot VARCHAR(4) NOT NULL, --FK zivot
 
             zpusob_smrti VARCHAR(100),
-            misto_umrti VARCHAR(4) NOT NULL
+            misto_umrti VARCHAR(4) NOT NULL -- FK teritoria
         );
 
 CREATE TABLE Aktualni
@@ -282,16 +283,16 @@ INSERT INTO Specificke_rysy (ID_rysy, barva_oci) VALUES ('S004', 'tmave hneda');
 INSERT INTO Specificke_rysy (ID_rysy, barva_oci) VALUES ('S007', 'svetle modra');
 
 --INSERT pohybu kocky--
-INSERT INTO Pohyb_kocky (interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('324d', 'packa', 'T001');
-INSERT INTO Pohyb_kocky (interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('54d', 'julca', 'T001');
-INSERT INTO Pohyb_kocky (interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('178d', 'micka', 'T002');
-INSERT INTO Pohyb_kocky (interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('1r244d', 'fous', 'T991');
-INSERT INTO Pohyb_kocky (interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('2r', 'tlapka', 'T156');
-INSERT INTO Pohyb_kocky (interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('10d', 'max', 'T177');
-INSERT INTO Pohyb_kocky (interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('1r354d', 'silva', 'T103');
-INSERT INTO Pohyb_kocky (interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('100d', 'richie', 'T003');
-INSERT INTO Pohyb_kocky (interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('178d', 'silva', 'T111');
-INSERT INTO Pohyb_kocky (interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('29d', 'dextr', 'T420');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK001', '324d', 'packa', 'T001');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK002', '54d', 'julca', 'T001');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK003', '178d', 'micka', 'T002');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK004', '1r244d', 'fous', 'T991');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK005', '2r', 'tlapka', 'T156');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK006', '10d', 'max', 'T177');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK007', '1r354d', 'silva', 'T103');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK008', '100d', 'richie', 'T003');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK009', '178d', 'silva', 'T111');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK010', '29d', 'dextr', 'T420');
 
 --INSERT intervalu vlastnictvi--
 INSERT INTO Interval_vlastnictvi (doba, jmeno_kocky, ID_vlastnictvi) VALUES ('324d', 'julca', 'V001');
