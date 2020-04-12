@@ -33,7 +33,7 @@ CREATE TABLE Zivot
         (
             ID_zivot VARCHAR(10) NOT NULL PRIMARY KEY,
             poradi INT NOT NULL,
-            delka VARCHAR(10) NOT NULL,
+            delka INT NOT NULL,
 
             jmeno_kocky VARCHAR(160) NOT NULL -- FK kocky
         );
@@ -68,14 +68,15 @@ CREATE TABLE Hostitel
 CREATE TABLE Rasa
         (
             ID_rasy VARCHAR(4) NOT NULL PRIMARY KEY,
-            puvod VARCHAR(50) NOT NULL,
-            max_delka_tesaku VARCHAR(4) NOT NULL
+            typ VARCHAR(50) NOT NULL
         );
 
 CREATE TABLE Specificke_rysy
         (
             ID_rysy VARCHAR(4) NOT NULL PRIMARY KEY,
-            barva_oci VARCHAR(50) NOT NULL
+            barva_oci VARCHAR(50) NOT NULL,
+            puvod VARCHAR(50) NOT NULL,
+            max_delka_tesaku VARCHAR(4) NOT NULL
         );
 
 
@@ -84,7 +85,7 @@ CREATE TABLE Specificke_rysy
 CREATE TABLE Pohyb_kocky
         (
             ID_pohyb_kocky VARCHAR(5) NOT NULL PRIMARY KEY,
-            interval_pobytu VARCHAR(10) NOT NULL,
+            interval_pobytu INT NOT NULL,
 
             jmeno_kocky VARCHAR(160) NOT NULL, --FK kocky
             ID_teritoria VARCHAR(4) NOT NULL  --Fk teritoria
@@ -177,8 +178,8 @@ CREATE TABLE Aktualni
  ALTER TABLE Hostitel ADD CONSTRAINT check_pohlavi CHECK (REGEXP_LIKE(pohlavi, '^([m|M][u|U][z|Z]|[z|Z][e|E][n|N][a|A])$'));
  ALTER TABLE Hostitel ADD CONSTRAINT check_vek CHECK ((vek >= 1) AND (vek <= 130));
  ALTER TABLE Zivot ADD CONSTRAINT check_pocet_zivotu CHECK ((poradi >= 1) AND (poradi <= 9));
- ALTER TABLE Zivot ADD CONSTRAINT check_zapis_zivota CHECK (REGEXP_LIKE(delka, '^([0-9]{1,2}[r,R]){0,1}(([0-9]{1,2}|[1-2][0-9]{2}|[3][0-6][0-5])[d,D]){0,1}$'));
- ALTER TABLE Rasa ADD CONSTRAINT check_cm CHECK (REGEXP_LIKE(max_delka_tesaku, '^[0-9]{1,2}[c,C][m,M]$'));
+ ALTER TABLE Zivot ADD CONSTRAINT check_zapis_zivota CHECK (delka > 0);
+ ALTER TABLE Specificke_rysy ADD CONSTRAINT check_cm CHECK (REGEXP_LIKE(max_delka_tesaku, '^[0-9]{1,2}[c,C][m,M]$'));
 
  ALTER TABLE Zivot ADD CONSTRAINT check_ID_1 CHECK (REGEXP_LIKE(ID_zivot,'Z[0-9]{3}'));
  ALTER TABLE Teritorium ADD CONSTRAINT check_ID_2 CHECK (REGEXP_LIKE(ID_teritorium,'T[0-9]{3}'));
@@ -187,23 +188,23 @@ CREATE TABLE Aktualni
  ALTER TABLE Rasa ADD CONSTRAINT check_ID_5 CHECK (REGEXP_LIKE(ID_rasy,'R[0-9]{3}'));
  ALTER TABLE Specificke_rysy ADD CONSTRAINT check_ID_6 CHECK (REGEXP_LIKE(ID_rysy,'S[0-9]{3}'));
 
- ALTER TABLE Pohyb_kocky ADD CONSTRAINT check_interval_pobytu CHECK (REGEXP_LIKE(interval_pobytu, '^([0-9]{1,2}[r,R]){0,1}(([0-9]{1,2}|[1-2][0-9]{2}|[3][0-6][0-5])[d,D]){0,1}$'));
+ ALTER TABLE Pohyb_kocky ADD CONSTRAINT check_interval_pobytu CHECK (interval_pobytu > 0);
 
  ALTER TABLE Interval_vlastnictvi ADD CONSTRAINT check_interval_vlastnictvi CHECK (REGEXP_LIKE(doba, '^([0-9]{1,2}[r,R]){0,1}(([0-9]{1,2}|[1-2][0-9]{2}|[3][0-6][0-5])[d,D]){0,1}$'));
 
 
 -------------------------------------------------------INSERT-----------------------------------------------------------------------
 --INSERT Rasy--
-INSERT INTO Rasa (ID_rasy, puvod, max_delka_tesaku) VALUES ('R001', 'Egypt', '27cm');
-INSERT INTO Rasa (ID_rasy, puvod, max_delka_tesaku) VALUES ('R002', 'Cesko', '12cm');
-INSERT INTO Rasa (ID_rasy, puvod, max_delka_tesaku) VALUES ('R125', 'Cina', '15cm');
-INSERT INTO Rasa (ID_rasy, puvod, max_delka_tesaku) VALUES ('R457', 'Nemecko', '7cm');
-INSERT INTO Rasa (ID_rasy, puvod, max_delka_tesaku) VALUES ('R521', 'Italie', '6cm');
-INSERT INTO Rasa (ID_rasy, puvod, max_delka_tesaku) VALUES ('R244', 'Izrael', '2cm');
-INSERT INTO Rasa (ID_rasy, puvod, max_delka_tesaku) VALUES ('R123', 'Pakistan', '9cm');
-INSERT INTO Rasa (ID_rasy, puvod, max_delka_tesaku) VALUES ('R777', 'Egypt', '11cm');
-INSERT INTO Rasa (ID_rasy, puvod, max_delka_tesaku) VALUES ('R624', 'California', '4cm');
-INSERT INTO Rasa (ID_rasy, puvod, max_delka_tesaku) VALUES ('R410', 'Indie', '3cm');
+INSERT INTO Rasa (ID_rasy, typ) VALUES ('R001', 'Birma');
+INSERT INTO Rasa (ID_rasy, typ) VALUES ('R002', 'Siamska');
+INSERT INTO Rasa (ID_rasy, typ) VALUES ('R125', 'Munchkin');
+INSERT INTO Rasa (ID_rasy, typ) VALUES ('R457', 'Ragdoll');
+INSERT INTO Rasa (ID_rasy, typ) VALUES ('R521', 'Sphynx');
+INSERT INTO Rasa (ID_rasy, typ) VALUES ('R244', 'Toyger');
+INSERT INTO Rasa (ID_rasy, typ) VALUES ('R123', 'Perska');
+INSERT INTO Rasa (ID_rasy, typ) VALUES ('R777', 'RagaMuffin');
+INSERT INTO Rasa (ID_rasy, typ) VALUES ('R624', 'Peterbald');
+INSERT INTO Rasa (ID_rasy, typ) VALUES ('R410', 'Nebelung');
 
 --INSERT Kocek--
 INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('julca','BLK', 'fialova', 'R001');
@@ -218,23 +219,23 @@ INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('pan
 INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('dextr', 'SKYB', 'seda', 'R123');
 
 --INSERT Zivota dane kocky--
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z001', 1, '7r140d', 'julca');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z003', 2, '1r123d', 'julca');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z002', 1, '13r254d', 'packa');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z123', 1, '25d', 'micka');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z222', 1, '1d', 'fous');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z223', 2, '2r12d', 'fous');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z246', 3, '1r', 'fous');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z564', 1, '8r45d', 'tlapka');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z101', 1, '1r23d', 'max');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z102', 2, '11r243d', 'max');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z103', 3, '3d', 'max');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z104', 1, '2r83d', 'richie');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z105', 1, '9r187d', 'silva');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z106', 2, '1r23d', 'silva');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z107', 1, '4r3d', 'pan zvon');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z187', 1, '11r123d', 'dextr');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z197', 2, '1r13d', 'dextr');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z001', 1, '2555', 'julca');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z003', 2, '465', 'julca');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z002', 1, '4895', 'packa');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z123', 1, '25', 'micka');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z222', 1, '1', 'fous');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z223', 2, '745', 'fous');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z246', 3, '365', 'fous');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z564', 1, '1698', 'tlapka');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z101', 1, '156', 'max');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z102', 2, '3120', 'max');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z103', 3, '3', 'max');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z104', 1, '999', 'richie');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z105', 1, '2222', 'silva');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z106', 2, '887', 'silva');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z107', 1, '1655', 'pan zvon');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z187', 1, '3522', 'dextr');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z197', 2, '1111', 'dextr');
 
 --INSERT Teritorii--
 INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T001', 'obyvak', 20);
@@ -273,28 +274,30 @@ INSERT INTO Vlastnictvi (ID_vlastnictvi, typ_vlastnictvi, kvantita, ID_hostitele
 INSERT INTO Vlastnictvi (ID_vlastnictvi, typ_vlastnictvi, kvantita, ID_hostitele, jmeno_kocky, ID_teritoria) VALUES ('V444', 'pirko na tycince', 4, 'H855', 'pan zvon', 'T103');
 
 --INSERT specifickych rysu--
-INSERT INTO Specificke_rysy (ID_rysy, barva_oci) VALUES ('S001', 'zelena');
-INSERT INTO Specificke_rysy (ID_rysy, barva_oci) VALUES ('S002', 'modra');
-INSERT INTO Specificke_rysy (ID_rysy, barva_oci) VALUES ('S247', 'hneda');
-INSERT INTO Specificke_rysy (ID_rysy, barva_oci) VALUES ('S542', 'cervena');
-INSERT INTO Specificke_rysy (ID_rysy, barva_oci) VALUES ('S734', 'cerna');
-INSERT INTO Specificke_rysy (ID_rysy, barva_oci) VALUES ('S665', 'duhova');
-INSERT INTO Specificke_rysy (ID_rysy, barva_oci) VALUES ('S003', 'modro zelena');
-INSERT INTO Specificke_rysy (ID_rysy, barva_oci) VALUES ('S132', 'zeleno hneda');
-INSERT INTO Specificke_rysy (ID_rysy, barva_oci) VALUES ('S004', 'tmave hneda');
-INSERT INTO Specificke_rysy (ID_rysy, barva_oci) VALUES ('S007', 'svetle modra');
+INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S001', 'zelena', 'Egypt', '27cm');
+INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S002', 'modra', 'Cesko', '12cm');
+INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S247', 'hneda', 'Cina', '15cm');
+INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S542', 'cervena', 'Nemecko', '7cm');
+INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S734', 'cerna', 'Italie', '6cm');
+INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S665', 'duhova', 'Izrael', '2cm');
+INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S003', 'modro zelena', 'Pakistan', '9cm');
+INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S132', 'zeleno hneda', 'Egypt', '11cm');
+INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S004', 'tmave hneda', 'California', '4cm');
+INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S007', 'svetle modra', 'Indie', '3cm');
 
 --INSERT pohybu kocky--
-INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK001', '324d', 'packa', 'T001');
-INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK002', '54d', 'julca', 'T001');
-INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK003', '178d', 'micka', 'T002');
-INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK004', '1r244d', 'fous', 'T991');
-INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK005', '2r', 'tlapka', 'T156');
-INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK006', '10d', 'max', 'T177');
-INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK007', '1r354d', 'silva', 'T103');
-INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK008', '100d', 'richie', 'T003');
-INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK009', '178d', 'silva', 'T111');
-INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK010', '29d', 'dextr', 'T420');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK001', '324', 'packa', 'T001');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK011', '480', 'packa', 'T001');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK002', '54', 'julca', 'T001');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK003', '178', 'micka', 'T002');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK004', '544', 'fous', 'T991');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK014', '200', 'fous', 'T991');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK005', '724', 'tlapka', 'T156');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK006', '10', 'max', 'T177');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK007', '684', 'silva', 'T103');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK008', '100', 'richie', 'T003');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK009', '178', 'silva', 'T111');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK010', '29', 'dextr', 'T420');
 
 --INSERT intervalu vlastnictvi--
 INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV001', '324d', 'julca', 'V001');
@@ -355,38 +358,68 @@ INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z107', 'T420');
 INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z197', 'T177');
 
 --INSERT data o minulem zivote kocky--
-INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z001', 'Prejeta autem.' ,'T546');
+INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z001', 'prejeta autem' , 'T546');
 INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z222', 'Utopena v zachodu.' ,'T991');
 INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z223', 'Rozmacknuta padem houpacky' ,'T156');
 INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z101', 'corona virus' ,'T991');
 INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z102', 'pad ze strechy' ,'T156');
-INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z105', 'zakousnuta jinou kockou' ,'T111');
+INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z105', 'umrela na hlad', 'T111');
 INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z187', 'smrt leknutim' ,'T420');
 
 ---------------------------------------------------------- SELECT ------------------------------------------------------
 --SQL skript obsahující dotazy SELECT musí obsahovat:
 --  1. konkrétně alespoň dva dotazy využívající spojení dvou tabulek,
-        -- Vsechnu kocky dane rasy
-        SELECT  Kocka.hlavni_jmeno as JMENO_KOCKY, Kocka.ID_rasy as ID_RASY, Rasa.puvod as ZEME_PUVODU, Rasa.max_delka_tesaku as DELKA_TESAKU
+    -- Vypis vsech kocek a jejich typu rasy
+        SELECT  Kocka.hlavni_jmeno as JMENO_KOCKY, Kocka.ID_rasy as ID_RASY, Rasa.typ as ZEME_PUVODU
         FROM Kocka JOIN Rasa ON Kocka.ID_rasy = Rasa.ID_rasy
         ORDER BY Kocka.ID_rasy;
 
-        -- Hostilete preferujici danou rasu
-        SELECT Hostitel.jmeno as JMENO_HOSTITELE, Hostitel.ID_hostitel as ID_HOSTITELE, Rasa.puvod as TYP_RASY
+    -- Vypis hostilete a jeho preference dane rasy
+        SELECT Hostitel.jmeno as JMENO_HOSTITELE, Hostitel.ID_hostitel as ID_HOSTITELE, Rasa.typ as TYP_RASY
         FROM Preference JOIN Hostitel ON Preference.ID_hostitele = Hostitel.ID_hostitel
                         JOIN Rasa ON Preference.ID_rasy = Rasa.ID_rasy
         ORDER BY Hostitel.ID_hostitel;
 
 --  2. jeden využívající spojení tří tabulek,
-
-        -- Kocka s intervalem pobytu v danem teritoriu
-        SELECT Kocka.hlavni_jmeno as JMENO_KOCKY, Rasa.puvod as TYP_RASY, Specificke_rysy.barva_oci as SPECIFICKE_RYSY
+    -- Kocka kde je uvedeno jeji jmeno, jakeho typu rasy je a dale specificke rysy dane rasy, jakoz to barva oci, maximalni delka tesatku a puvod
+        SELECT Kocka.hlavni_jmeno as JMENO_KOCKY, Rasa.typ as TYP_RASY, Specificke_rysy.barva_oci as SPECIFICKE_RYSY_BARVA_OCI, Specificke_rysy.max_delka_tesaku as SPECIFICKE_RYSY_DELKA_TESAKU, Specificke_rysy.puvod as SPECIFICKE_RYSY_PUVOD
         FROM Rysy_rasy JOIN Specificke_rysy ON Specificke_rysy.ID_rysy = Rysy_rasy.ID_rysy
                        JOIN Rasa ON Rasa.ID_rasy = Rysy_rasy.ID_rasy
                        JOIN Kocka on Rasa.ID_rasy = Kocka.ID_rasy
+        ORDER BY Kocka.hlavni_jmeno;
 
 --  3. dva dotazy s klauzulí GROUP BY a agregační funkcí,
+    --Dotaz na jmeno kocky a v kolikatem zivote se nachazi
+        SELECT Zivot.jmeno_kocky as JMENO_KOCKY, COUNT(*) as V_KOLIKATEM_ZIVOTE_SE_KOCKA_NACHAZI
+        FROM Zivot
+        GROUP BY Zivot.jmeno_kocky;
+
+    --Dotaz na Typ Teritorium, pocet kocek ktere v danem teritoriu zily a delka nejdelsiho pobytu kocky v danem teritoriu
+        SELECT Teritorium.typ_teritoria as TYP_TERITORIA, COUNT(Pohyb_kocky.ID_teritoria) as KOLIK_KOCEK_ZDE_ZILO, MAX(Pohyb_kocky.interval_pobytu) as NEJDELSI_DELKA_POBYTU_KOCKY
+        FROM Pohyb_kocky JOIN Teritorium ON Pohyb_kocky.ID_teritoria = Teritorium.ID_teritorium
+        GROUP BY Teritorium.typ_teritoria;
+
 --  4. jeden dotaz obsahující predikát EXISTS
+    --Dotaz ktery vypise v jakych teritoriich se vyskytovala vice jak 1 kocka
+        SELECT Teritorium.ID_teritorium as ID_TERITORIA, Teritorium.typ_teritoria as TYP_TERITORIA
+        FROM Teritorium
+        WHERE EXISTS(
+            SELECT COUNT(Pohyb_kocky.ID_teritoria)
+            FROM Pohyb_kocky
+            WHERE Pohyb_kocky.ID_teritoria = Teritorium.ID_teritorium
+            GROUP BY Teritorium.typ_teritoria
+            HAVING COUNT(Pohyb_kocky.ID_teritoria) > 1
+            )
+        ORDER BY Teritorium.typ_teritoria;
+
 --  5. a jeden dotaz s predikátem IN s vnořeným selectem (nikoliv IN s množinou konstantních dat).
+    --Dotaz ktery vypise Kocky, ktere se alespon jednou ze svych prozitych zivotu nedozily 1 roku, nebo kocky ktere ziji prvni zivot a nedozili se zatim 1 roku
+        SELECT Kocka.hlavni_jmeno as JMENO_KOCKY, Kocka.barva_srsti as BARVA_SRSTI, Kocka.vzorek_kuze as VZOREK_KUZE
+        FROM Kocka
+        WHERE Kocka.hlavni_jmeno IN (
+            SELECT Zivot.jmeno_kocky
+            FROM Zivot
+            WHERE Zivot.delka < 365
+            );
 --  - U každého z dotazů musí být (v komentáři SQL kódu) popsáno srozumitelně, jaká data hledá daný dotaz (jaká je jeho funkce v aplikaci).
 
