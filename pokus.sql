@@ -91,8 +91,9 @@ CREATE TABLE Pohyb_kocky
         );
 
 CREATE TABLE Interval_vlastnictvi
-        (   
-            doba VARCHAR(10) NOT NULL PRIMARY KEY, -- pridan PK.. OPRVAVA
+        (
+            ID_interval_vlastnictvi VARCHAR(5) NOT NULL PRIMARY KEY ,
+            doba VARCHAR(10) NOT NULL, -- pridan PK.. OPRVAVA
 
             jmeno_kocky VARCHAR(160) NOT NULL, --FK kocky
             ID_vlastnictvi VARCHAR(4) NOT NULL  --FK vlastnictvi
@@ -296,15 +297,15 @@ INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_terito
 INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK010', '29d', 'dextr', 'T420');
 
 --INSERT intervalu vlastnictvi--
-INSERT INTO Interval_vlastnictvi (doba, jmeno_kocky, ID_vlastnictvi) VALUES ('324d', 'julca', 'V001');
-INSERT INTO Interval_vlastnictvi (doba, jmeno_kocky, ID_vlastnictvi) VALUES ('54d', 'julca', 'V002');
-INSERT INTO Interval_vlastnictvi (doba, jmeno_kocky, ID_vlastnictvi) VALUES ('1r25d', 'micka', 'V269');
-INSERT INTO Interval_vlastnictvi (doba, jmeno_kocky, ID_vlastnictvi) VALUES ('2d', 'tlapka', 'V400');
-INSERT INTO Interval_vlastnictvi (doba, jmeno_kocky, ID_vlastnictvi) VALUES ('15d', 'max', 'V300');
-INSERT INTO Interval_vlastnictvi (doba, jmeno_kocky, ID_vlastnictvi) VALUES ('1d', 'silva', 'V444');
-INSERT INTO Interval_vlastnictvi (doba, jmeno_kocky, ID_vlastnictvi) VALUES ('39d', 'pan zvon', 'V298');
-INSERT INTO Interval_vlastnictvi (doba, jmeno_kocky, ID_vlastnictvi) VALUES ('2d', 'max', 'V004');
-INSERT INTO Interval_vlastnictvi (doba, jmeno_kocky, ID_vlastnictvi) VALUES ('3r2d', 'dextr', 'V298');
+INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV001', '324d', 'julca', 'V001');
+INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV002', '54d', 'julca', 'V002');
+INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV003', '1r25d', 'micka', 'V269');
+INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV004', '2d', 'tlapka', 'V400');
+INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV005', '15d', 'max', 'V300');
+INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV006', '1d', 'silva', 'V444');
+INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV007', '39d', 'pan zvon', 'V298');
+INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV008', '2d', 'max', 'V004');
+INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV009', '3r2d', 'dextr', 'V298');
 
 --INSERT jaky hostitel slouzi jake kocce--
 INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL001', 'kulisak', 'julca', 'H001');
@@ -370,3 +371,4 @@ INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z187', 'smrt l
 --  4. jeden dotaz obsahující predikát EXISTS
 --  5. a jeden dotaz s predikátem IN s vnořeným selectem (nikoliv IN s množinou konstantních dat).
 --  - U každého z dotazů musí být (v komentáři SQL kódu) popsáno srozumitelně, jaká data hledá daný dotaz (jaká je jeho funkce v aplikaci).
+
