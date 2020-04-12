@@ -366,6 +366,10 @@ INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z187', 'smrt l
 ---------------------------------------------------------- SELECT ------------------------------------------------------
 --SQL skript obsahující dotazy SELECT musí obsahovat:
 --  1. konkrétně alespoň dva dotazy využívající spojení dvou tabulek,
+
+SELECT ID_hostitel as HOVNO
+FROM Hostitel;
+
 --  2. jeden využívající spojení tří tabulek,
 --  3. dva dotazy s klauzulí GROUP BY a agregační funkcí,
 --  4. jeden dotaz obsahující predikát EXISTS
