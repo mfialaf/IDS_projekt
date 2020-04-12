@@ -84,7 +84,7 @@ CREATE TABLE Specificke_rysy
 CREATE TABLE Pohyb_kocky
         (
             ID_pohyb_kocky VARCHAR(5) NOT NULL PRIMARY KEY,
-            interval_pobytu VARCHAR(10) NOT NULL, -- pridan PK.. OPRVAVA
+            interval_pobytu VARCHAR(10) NOT NULL,
 
             jmeno_kocky VARCHAR(160) NOT NULL, --FK kocky
             ID_teritoria VARCHAR(4) NOT NULL  --Fk teritoria
@@ -100,7 +100,8 @@ CREATE TABLE Interval_vlastnictvi
 
 CREATE TABLE Slouzi
         (
-            prezdivka VARCHAR(50) NOT NULL PRIMARY KEY, -- pridan PK.. OPRVAVA
+            ID_slouzi VARCHAR(5) NOT NULL PRIMARY KEY,
+            prezdivka VARCHAR(50) NOT NULL,
 
             jmeno_kocky VARCHAR(160) NOT NULL, --FK kocky
             ID_hostitele VARCHAR(4) NOT NULL --FK hostitel
@@ -306,16 +307,16 @@ INSERT INTO Interval_vlastnictvi (doba, jmeno_kocky, ID_vlastnictvi) VALUES ('2d
 INSERT INTO Interval_vlastnictvi (doba, jmeno_kocky, ID_vlastnictvi) VALUES ('3r2d', 'dextr', 'V298');
 
 --INSERT jaky hostitel slouzi jake kocce--
-INSERT INTO Slouzi (prezdivka, jmeno_kocky, ID_hostitele) VALUES ('kulisak', 'julca', 'H001');
-INSERT INTO Slouzi (prezdivka, jmeno_kocky, ID_hostitele) VALUES ('zrout', 'packa', 'H001');
-INSERT INTO Slouzi (prezdivka, jmeno_kocky, ID_hostitele) VALUES ('otrava', 'micka', 'H002');
-INSERT INTO Slouzi (prezdivka, jmeno_kocky, ID_hostitele) VALUES ('kulicka', 'fous', 'H954');
-INSERT INTO Slouzi (prezdivka, jmeno_kocky, ID_hostitele) VALUES ('milacek', 'tlapka', 'H854');
-INSERT INTO Slouzi (prezdivka, jmeno_kocky, ID_hostitele) VALUES ('slinta', 'max', 'H855');
-INSERT INTO Slouzi (prezdivka, jmeno_kocky, ID_hostitele) VALUES ('lizal', 'dextr', 'H333');
-INSERT INTO Slouzi (prezdivka, jmeno_kocky, ID_hostitele) VALUES ('fantom', 'silva', 'H003');
-INSERT INTO Slouzi (prezdivka, jmeno_kocky, ID_hostitele) VALUES ('zrout', 'richie', 'H150');
-INSERT INTO Slouzi (prezdivka, jmeno_kocky, ID_hostitele) VALUES ('lenoch', 'pan zvon', 'H055');
+INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL001', 'kulisak', 'julca', 'H001');
+INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL002', 'zrout', 'packa', 'H001');
+INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL003', 'otrava', 'micka', 'H002');
+INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL004', 'kulicka', 'fous', 'H954');
+INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL005', 'milacek', 'tlapka', 'H854');
+INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL006', 'slinta', 'max', 'H855');
+INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL007', 'lizal', 'dextr', 'H333');
+INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL008', 'fantom', 'silva', 'H003');
+INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL009', 'zrout', 'richie', 'H150');
+INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL010', 'lenoch', 'pan zvon', 'H055');
 
 --INSERT specifickych rysu dane rasy--
 INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R001', 'S734');
