@@ -366,19 +366,24 @@ INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z187', 'smrt l
 ---------------------------------------------------------- SELECT ------------------------------------------------------
 --SQL skript obsahující dotazy SELECT musí obsahovat:
 --  1. konkrétně alespoň dva dotazy využívající spojení dvou tabulek,
-
-        SELECT ID_hostitel as HOVNO
-        FROM Hostitel;
-
         -- Vsechnu kocky dane rasy
+        SELECT  Kocka.hlavni_jmeno as JMENO_KOCKY, Kocka.ID_rasy as ID_RASY, Rasa.puvod as ZEME_PUVODU, Rasa.max_delka_tesaku as DELKA_TESAKU
+        FROM Kocka JOIN Rasa ON Kocka.ID_rasy = Rasa.ID_rasy
+        ORDER BY Kocka.ID_rasy;
 
         -- Hostilete preferujici danou rasu
-
+        SELECT Hostitel.jmeno as JMENO_HOSTITELE, Hostitel.ID_hostitel as ID_HOSTITELE, Rasa.puvod as TYP_RASY
+        FROM Preference JOIN Hostitel ON Preference.ID_hostitele = Hostitel.ID_hostitel
+                        JOIN Rasa ON Preference.ID_rasy = Rasa.ID_rasy
+        ORDER BY Hostitel.ID_hostitel;
 
 --  2. jeden využívající spojení tří tabulek,
 
         -- Kocka s intervalem pobytu v danem teritoriu
-
+        SELECT Kocka.hlavni_jmeno as JMENO_KOCKY, Rasa.puvod as TYP_RASY, Specificke_rysy.barva_oci as SPECIFICKE_RYSY
+        FROM Rysy_rasy JOIN Specificke_rysy ON Specificke_rysy.ID_rysy = Rysy_rasy.ID_rysy
+                       JOIN Rasa ON Rasa.ID_rasy = Rysy_rasy.ID_rasy
+                       JOIN Kocka on Rasa.ID_rasy = Kocka.ID_rasy
 
 --  3. dva dotazy s klauzulí GROUP BY a agregační funkcí,
 --  4. jeden dotaz obsahující predikát EXISTS
