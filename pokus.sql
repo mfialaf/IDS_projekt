@@ -370,6 +370,22 @@ BEGIN
 END;
 /
 
+
+-- TRIGGER2: Trigger kontrolujici pocet zivotu kocky
+
+CREATE OR REPLACE TRIGGER pocet_zivotu_kocky
+  BEFORE INSERT OR UPDATE OF poradi ON Zivot
+  FOR EACH ROW
+    DECLARE
+BEGIN
+  IF NOT (:NEW.poradi < 10 OR :NEW.poradi < 1) THEN
+    RAISE_APPLICATION_ERROR(-20420, 'Nespravny pocet zivotu, kocka ma pouze 9 zivotu, cislo musi byt v rozmezi 1 až 9.');
+  END IF;
+
+END;
+/
+
+
 -------------------------------------------------------INSERT-----------------------------------------------------------------------
 --INSERT Rasy--
 INSERT INTO Rasa (typ) VALUES ('Birma');
