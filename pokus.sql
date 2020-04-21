@@ -183,12 +183,15 @@ CREATE TABLE Aktualni
  ALTER TABLE Zivot ADD CONSTRAINT check_zapis_zivota CHECK (delka > 0);
  ALTER TABLE Specificke_rysy ADD CONSTRAINT check_cm CHECK (REGEXP_LIKE(max_delka_tesaku, '^[0-9]{1,2}[c,C][m,M]$'));
 
- ALTER TABLE Zivot ADD CONSTRAINT check_ID_1 CHECK (REGEXP_LIKE(ID_zivot,'Z[0-9]{3}'));
- ALTER TABLE Teritorium ADD CONSTRAINT check_ID_2 CHECK (REGEXP_LIKE(ID_teritorium,'T[0-9]{3}'));
- ALTER TABLE Vlastnictvi ADD CONSTRAINT check_ID_3 CHECK (REGEXP_LIKE(ID_vlastnictvi,'V[0-9]{3}'));
- ALTER TABLE Hostitel ADD CONSTRAINT check_ID_4 CHECK (REGEXP_LIKE(ID_hostitel,'H[0-9]{3}'));
- ALTER TABLE Rasa ADD CONSTRAINT check_ID_5 CHECK (REGEXP_LIKE(ID_rasy,'R[0-9]{3}'));
- ALTER TABLE Specificke_rysy ADD CONSTRAINT check_ID_6 CHECK (REGEXP_LIKE(ID_rysy,'S[0-9]{3}'));
+ ALTER TABLE Zivot ADD CONSTRAINT check_ID_1 CHECK (REGEXP_LIKE(ID_zivot,'Z[0-9]+'));
+ ALTER TABLE Teritorium ADD CONSTRAINT check_ID_2 CHECK (REGEXP_LIKE(ID_teritorium,'T[0-9]+'));
+ ALTER TABLE Vlastnictvi ADD CONSTRAINT check_ID_3 CHECK (REGEXP_LIKE(ID_vlastnictvi,'V[0-9]+'));
+ ALTER TABLE Hostitel ADD CONSTRAINT check_ID_4 CHECK (REGEXP_LIKE(ID_hostitel,'H[0-9]+'));
+ ALTER TABLE Rasa ADD CONSTRAINT check_ID_5 CHECK (REGEXP_LIKE(ID_rasy,'R[0-9]+'));
+ ALTER TABLE Specificke_rysy ADD CONSTRAINT check_ID_6 CHECK (REGEXP_LIKE(ID_rysy,'S[0-9]+'));
+ ALTER TABLE Pohyb_kocky ADD CONSTRAINT check_ID_7 CHECK (REGEXP_LIKE(ID_pohyb_kocky,'PK[0-9]+'));
+ ALTER TABLE Interval_vlastnictvi ADD CONSTRAINT check_ID_8 CHECK (REGEXP_LIKE(ID_interval_vlastnictvi,'IV[0-9]+'));
+ ALTER TABLE Slouzi ADD CONSTRAINT check_ID_9 CHECK (REGEXP_LIKE(ID_slouzi,'SL[0-9]+'));
 
  ALTER TABLE Pohyb_kocky ADD CONSTRAINT check_interval_pobytu CHECK (interval_pobytu > 0);
 
@@ -197,176 +200,176 @@ CREATE TABLE Aktualni
 
 -------------------------------------------------------INSERT-----------------------------------------------------------------------
 --INSERT Rasy--
-INSERT INTO Rasa (ID_rasy, typ) VALUES ('R001', 'Birma');
-INSERT INTO Rasa (ID_rasy, typ) VALUES ('R002', 'Siamska');
-INSERT INTO Rasa (ID_rasy, typ) VALUES ('R125', 'Munchkin');
-INSERT INTO Rasa (ID_rasy, typ) VALUES ('R457', 'Ragdoll');
-INSERT INTO Rasa (ID_rasy, typ) VALUES ('R521', 'Sphynx');
-INSERT INTO Rasa (ID_rasy, typ) VALUES ('R244', 'Toyger');
-INSERT INTO Rasa (ID_rasy, typ) VALUES ('R123', 'Perska');
-INSERT INTO Rasa (ID_rasy, typ) VALUES ('R777', 'RagaMuffin');
-INSERT INTO Rasa (ID_rasy, typ) VALUES ('R624', 'Peterbald');
-INSERT INTO Rasa (ID_rasy, typ) VALUES ('R410', 'Nebelung');
+INSERT INTO Rasa (ID_rasy, typ) VALUES ('R1', 'Birma');
+INSERT INTO Rasa (ID_rasy, typ) VALUES ('R2', 'Siamska');
+INSERT INTO Rasa (ID_rasy, typ) VALUES ('R3', 'Munchkin');
+INSERT INTO Rasa (ID_rasy, typ) VALUES ('R4', 'Ragdoll');
+INSERT INTO Rasa (ID_rasy, typ) VALUES ('R5', 'Sphynx');
+INSERT INTO Rasa (ID_rasy, typ) VALUES ('R6', 'Toyger');
+INSERT INTO Rasa (ID_rasy, typ) VALUES ('R7', 'Perska');
+INSERT INTO Rasa (ID_rasy, typ) VALUES ('R8', 'RagaMuffin');
+INSERT INTO Rasa (ID_rasy, typ) VALUES ('R9', 'Peterbald');
+INSERT INTO Rasa (ID_rasy, typ) VALUES ('R10', 'Nebelung');
 
 --INSERT Kocek--
-INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('julca','BLK', 'fialova', 'R001');
-INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('packa','TW', 'cerna', 'R002');
-INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('micka','SKYB', 'bila', 'R125');
-INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('fous','BLK', 'cerna', 'R457');
-INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('tlapka','YLW', 'oranzova', 'R521');
-INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('max', 'BLK', 'zrzava', 'R244');
-INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('richie', 'ZNK', 'seda', 'R624');
-INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('silva', 'TW', 'zlatava', 'R777');
-INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('pan zvon', 'BLK', 'cerna', 'R457');
-INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('dextr', 'SKYB', 'seda', 'R123');
+INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('julca','BLK', 'fialova', 'R1');
+INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('packa','TW', 'cerna', 'R2');
+INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('micka','SKYB', 'bila', 'R3');
+INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('fous','BLK', 'cerna', 'R4');
+INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('tlapka','YLW', 'oranzova', 'R5');
+INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('max', 'BLK', 'zrzava', 'R6');
+INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('richie', 'ZNK', 'seda', 'R9');
+INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('silva', 'TW', 'zlatava', 'R8');
+INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('pan zvon', 'BLK', 'cerna', 'R4');
+INSERT INTO Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('dextr', 'SKYB', 'seda', 'R7');
 
 --INSERT Zivota dane kocky--
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z001', 1, '2555', 'julca');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z003', 2, '465', 'julca');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z002', 1, '4895', 'packa');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z123', 1, '25', 'micka');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z222', 1, '1', 'fous');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z223', 2, '745', 'fous');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z246', 3, '365', 'fous');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z564', 1, '1698', 'tlapka');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z101', 1, '156', 'max');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z102', 2, '3120', 'max');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z103', 3, '3', 'max');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z104', 1, '999', 'richie');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z105', 1, '2222', 'silva');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z106', 2, '887', 'silva');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z107', 1, '1655', 'pan zvon');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z187', 1, '3522', 'dextr');
-INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z197', 2, '1111', 'dextr');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z1', 1, '2555', 'julca');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z2', 2, '465', 'julca');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z3', 1, '4895', 'packa');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z4', 1, '25', 'micka');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z5', 1, '1', 'fous');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z6', 2, '745', 'fous');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z7', 3, '365', 'fous');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z8', 1, '1698', 'tlapka');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z9', 1, '156', 'max');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z10', 2, '3120', 'max');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z11', 3, '3', 'max');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z12', 1, '999', 'richie');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z13', 1, '2222', 'silva');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z14', 2, '887', 'silva');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z15', 1, '1655', 'pan zvon');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z16', 1, '3522', 'dextr');
+INSERT INTO Zivot (ID_zivot, poradi, delka, jmeno_kocky) VALUES ('Z17', 2, '1111', 'dextr');
 
 --INSERT Teritorii--
-INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T001', 'obyvak', 20);
-INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T002', 'kuchyn', 10);
-INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T156', 'zahrada', 50);
-INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T546', 'ulice', 200);
-INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T991', 'toaleta', 3);
-INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T003', 'garaz', 45);
-INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T103', 'sklep', 30);
-INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T111', 'puda', 70);
-INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T420', 'predsin', 10);
-INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T177', 'koupelna', 15);
+INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T1', 'obyvak', 20);
+INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T2', 'kuchyn', 10);
+INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T3', 'zahrada', 50);
+INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T4', 'ulice', 200);
+INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T5', 'toaleta', 3);
+INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T6', 'garaz', 45);
+INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T7', 'sklep', 30);
+INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T8', 'puda', 70);
+INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T9', 'predsin', 10);
+INSERT INTO Teritorium (ID_teritorium, typ_teritoria, kapacita_kocek) VALUES ('T10', 'koupelna', 15);
 
 --INSERT Hostitelu--
-INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H001', 'Pavel', 42, 'muz', 'Znojmo');
-INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H002', 'Marek', 22, 'muz', 'Brno');
-INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H055', 'Boris', 21, 'muz', 'Praha');
-INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H150', 'Dan', 21, 'muz', 'Ostrava');
-INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H854', 'Jan', 22, 'muz', 'Plzen');
-INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H855', 'Katka', 56, 'zena', 'Most');
-INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H954', 'Monika', 17, 'zena', 'Jundrov');
-INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H958', 'Rebeka', 32, 'zena', 'Hradec Kralove');
-INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H003', 'Lukas', 45, 'muz', 'LA');
-INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H333', 'Michaela', 77, 'zena', 'Zlin');
+INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H1', 'Pavel', 42, 'muz', 'Znojmo');
+INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H2', 'Marek', 22, 'muz', 'Brno');
+INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H3', 'Boris', 21, 'muz', 'Praha');
+INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H4', 'Dan', 21, 'muz', 'Ostrava');
+INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H5', 'Jan', 22, 'muz', 'Plzen');
+INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H6', 'Katka', 56, 'zena', 'Most');
+INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H7', 'Monika', 17, 'zena', 'Jundrov');
+INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H8', 'Rebeka', 32, 'zena', 'Hradec Kralove');
+INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H9', 'Lukas', 45, 'muz', 'LA');
+INSERT INTO Hostitel (ID_hostitel, jmeno, vek, pohlavi, misto_bydleni) VALUES ('H10', 'Michaela', 77, 'zena', 'Zlin');
 
 --INSERT typu vlastnictvi--
-INSERT INTO Vlastnictvi (ID_vlastnictvi, typ_vlastnictvi, kvantita, ID_hostitele, jmeno_kocky, ID_teritoria) VALUES ('V001', 'balonek', 3, 'H001', 'julca', 'T001');
-INSERT INTO Vlastnictvi (ID_vlastnictvi, typ_vlastnictvi, kvantita, ID_hostitele, jmeno_kocky, ID_teritoria) VALUES ('V002', 'klubicko bavlny', 2, '', 'julca', 'T001');
-INSERT INTO Vlastnictvi (ID_vlastnictvi, typ_vlastnictvi, kvantita, ID_hostitele, jmeno_kocky, ID_teritoria) VALUES ('V269', 'letajici talir', 1, 'H150', 'micka', 'T991');
-INSERT INTO Vlastnictvi (ID_vlastnictvi, typ_vlastnictvi, kvantita, ID_hostitele, jmeno_kocky, ID_teritoria) VALUES ('V400', 'bumerang', 1, 'H854', 'tlapka', 'T156');
-INSERT INTO Vlastnictvi (ID_vlastnictvi, typ_vlastnictvi, kvantita, ID_hostitele, jmeno_kocky, ID_teritoria) VALUES ('V562', 'klacik', 12, '', '', 'T002');
-INSERT INTO Vlastnictvi (ID_vlastnictvi, typ_vlastnictvi, kvantita, ID_hostitele, jmeno_kocky, ID_teritoria) VALUES ('V003', 'drazditko', 10, '', '', 'T111');
-INSERT INTO Vlastnictvi (ID_vlastnictvi, typ_vlastnictvi, kvantita, ID_hostitele, jmeno_kocky, ID_teritoria) VALUES ('V004', 'plysova rybicka', 3, 'H003', 'richie', 'T420');
-INSERT INTO Vlastnictvi (ID_vlastnictvi, typ_vlastnictvi, kvantita, ID_hostitele, jmeno_kocky, ID_teritoria) VALUES ('V298', 'myska', 4, 'H954', 'max', 'T111');
-INSERT INTO Vlastnictvi (ID_vlastnictvi, typ_vlastnictvi, kvantita, ID_hostitele, jmeno_kocky, ID_teritoria) VALUES ('V300', 'polstarek', 1, '', '', 'T001');
-INSERT INTO Vlastnictvi (ID_vlastnictvi, typ_vlastnictvi, kvantita, ID_hostitele, jmeno_kocky, ID_teritoria) VALUES ('V444', 'pirko na tycince', 4, 'H855', 'pan zvon', 'T103');
+INSERT INTO Vlastnictvi (ID_vlastnictvi, typ_vlastnictvi, kvantita, ID_hostitele, jmeno_kocky, ID_teritoria) VALUES ('V1', 'balonek', 3, 'H1', 'julca', 'T1');
+INSERT INTO Vlastnictvi (ID_vlastnictvi, typ_vlastnictvi, kvantita, ID_hostitele, jmeno_kocky, ID_teritoria) VALUES ('V2', 'klubicko bavlny', 2, '', 'julca', 'T1');
+INSERT INTO Vlastnictvi (ID_vlastnictvi, typ_vlastnictvi, kvantita, ID_hostitele, jmeno_kocky, ID_teritoria) VALUES ('V3', 'letajici talir', 1, 'H4', 'micka', 'T5');
+INSERT INTO Vlastnictvi (ID_vlastnictvi, typ_vlastnictvi, kvantita, ID_hostitele, jmeno_kocky, ID_teritoria) VALUES ('V4', 'bumerang', 1, 'H5', 'tlapka', 'T3');
+INSERT INTO Vlastnictvi (ID_vlastnictvi, typ_vlastnictvi, kvantita, ID_hostitele, jmeno_kocky, ID_teritoria) VALUES ('V5', 'klacik', 12, '', '', 'T2');
+INSERT INTO Vlastnictvi (ID_vlastnictvi, typ_vlastnictvi, kvantita, ID_hostitele, jmeno_kocky, ID_teritoria) VALUES ('V6', 'drazditko', 10, '', '', 'T8');
+INSERT INTO Vlastnictvi (ID_vlastnictvi, typ_vlastnictvi, kvantita, ID_hostitele, jmeno_kocky, ID_teritoria) VALUES ('V7', 'plysova rybicka', 3, 'H9', 'richie', 'T9');
+INSERT INTO Vlastnictvi (ID_vlastnictvi, typ_vlastnictvi, kvantita, ID_hostitele, jmeno_kocky, ID_teritoria) VALUES ('V8', 'myska', 4, 'H7', 'max', 'T8');
+INSERT INTO Vlastnictvi (ID_vlastnictvi, typ_vlastnictvi, kvantita, ID_hostitele, jmeno_kocky, ID_teritoria) VALUES ('V9', 'polstarek', 1, '', '', 'T1');
+INSERT INTO Vlastnictvi (ID_vlastnictvi, typ_vlastnictvi, kvantita, ID_hostitele, jmeno_kocky, ID_teritoria) VALUES ('V10', 'pirko na tycince', 4, 'H6', 'pan zvon', 'T7');
 
 --INSERT specifickych rysu--
-INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S001', 'zelena', 'Egypt', '27cm');
-INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S002', 'modra', 'Cesko', '12cm');
-INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S247', 'hneda', 'Cina', '15cm');
-INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S542', 'cervena', 'Nemecko', '7cm');
-INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S734', 'cerna', 'Italie', '6cm');
-INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S665', 'duhova', 'Izrael', '2cm');
-INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S003', 'modro zelena', 'Pakistan', '9cm');
-INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S132', 'zeleno hneda', 'Egypt', '11cm');
-INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S004', 'tmave hneda', 'California', '4cm');
-INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S007', 'svetle modra', 'Indie', '3cm');
+INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S1', 'zelena', 'Egypt', '27cm');
+INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S2', 'modra', 'Cesko', '12cm');
+INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S3', 'hneda', 'Cina', '15cm');
+INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S4', 'cervena', 'Nemecko', '7cm');
+INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S5', 'cerna', 'Italie', '6cm');
+INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S6', 'duhova', 'Izrael', '2cm');
+INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S7', 'modro zelena', 'Pakistan', '9cm');
+INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S8', 'zeleno hneda', 'Egypt', '11cm');
+INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S9', 'tmave hneda', 'California', '4cm');
+INSERT INTO Specificke_rysy (ID_rysy, barva_oci, puvod, max_delka_tesaku) VALUES ('S10', 'svetle modra', 'Indie', '3cm');
 
 --INSERT pohybu kocky--
-INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK001', '324', 'packa', 'T001');
-INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK011', '480', 'packa', 'T001');
-INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK002', '54', 'julca', 'T001');
-INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK003', '178', 'micka', 'T002');
-INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK004', '544', 'fous', 'T991');
-INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK014', '200', 'fous', 'T991');
-INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK005', '724', 'tlapka', 'T156');
-INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK006', '10', 'max', 'T177');
-INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK007', '684', 'silva', 'T103');
-INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK008', '100', 'richie', 'T003');
-INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK009', '178', 'silva', 'T111');
-INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK010', '29', 'dextr', 'T420');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK1', '324', 'packa', 'T1');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK2', '480', 'packa', 'T1');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK3', '54', 'julca', 'T1');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK4', '178', 'micka', 'T2');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK5', '544', 'fous', 'T5');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK6', '200', 'fous', 'T5');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK7', '724', 'tlapka', 'T3');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK8', '10', 'max', 'T10');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK9', '684', 'silva', 'T7');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK10', '100', 'richie', 'T6');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK11', '178', 'silva', 'T8');
+INSERT INTO Pohyb_kocky (ID_pohyb_kocky, interval_pobytu, jmeno_kocky, ID_teritoria) VALUES ('PK12', '29', 'dextr', 'T9');
 
 --INSERT intervalu vlastnictvi--
-INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV001', '324d', 'julca', 'V001');
-INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV002', '54d', 'julca', 'V002');
-INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV003', '1r25d', 'micka', 'V269');
-INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV004', '2d', 'tlapka', 'V400');
-INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV005', '15d', 'max', 'V300');
-INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV006', '1d', 'silva', 'V444');
-INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV007', '39d', 'pan zvon', 'V298');
-INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV008', '2d', 'max', 'V004');
-INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV009', '3r2d', 'dextr', 'V298');
+INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV1', '324d', 'julca', 'V1');
+INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV2', '54d', 'julca', 'V2');
+INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV3', '1r25d', 'micka', 'V3');
+INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV4', '2d', 'tlapka', 'V4');
+INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV5', '15d', 'max', 'V9');
+INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV6', '1d', 'silva', 'V10');
+INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV7', '39d', 'pan zvon', 'V8');
+INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV8', '2d', 'max', 'V7');
+INSERT INTO Interval_vlastnictvi (ID_interval_vlastnictvi, doba, jmeno_kocky, ID_vlastnictvi) VALUES ('IV9', '3r2d', 'dextr', 'V8');
 
 --INSERT jaky hostitel slouzi jake kocce--
-INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL001', 'kulisak', 'julca', 'H001');
-INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL002', 'zrout', 'packa', 'H001');
-INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL003', 'otrava', 'micka', 'H002');
-INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL004', 'kulicka', 'fous', 'H954');
-INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL005', 'milacek', 'tlapka', 'H854');
-INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL006', 'slinta', 'max', 'H855');
-INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL007', 'lizal', 'dextr', 'H333');
-INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL008', 'fantom', 'silva', 'H003');
-INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL009', 'zrout', 'richie', 'H150');
-INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL010', 'lenoch', 'pan zvon', 'H055');
+INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL1', 'kulisak', 'julca', 'H1');
+INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL2', 'zrout', 'packa', 'H1');
+INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL3', 'otrava', 'micka', 'H2');
+INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL4', 'kulicka', 'fous', 'H7');
+INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL5', 'milacek', 'tlapka', 'H5');
+INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL6', 'slinta', 'max', 'H6');
+INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL7', 'lizal', 'dextr', 'H10');
+INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL8', 'fantom', 'silva', 'H9');
+INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL9', 'zrout', 'richie', 'H4');
+INSERT INTO Slouzi (ID_slouzi, prezdivka, jmeno_kocky, ID_hostitele) VALUES ('SL10', 'lenoch', 'pan zvon', 'H3');
 
 --INSERT specifickych rysu dane rasy--
-INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R001', 'S734');
-INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R002', 'S001');
-INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R125', 'S542');
-INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R457', 'S002');
-INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R521', 'S247');
-INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R244', 'S665');
-INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R123', 'S003');
-INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R777', 'S132');
-INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R410', 'S004');
-INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R624', 'S007');
+INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R1', 'S5');
+INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R2', 'S1');
+INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R3', 'S4');
+INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R4', 'S2');
+INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R5', 'S3');
+INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R6', 'S6');
+INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R7', 'S7');
+INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R8', 'S8');
+INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R10', 'S9');
+INSERT INTO Rysy_rasy (ID_rasy, ID_rysy) VALUES ('R9', 'S10');
 
 --INSERT jakou rasu dany hostitel preferuje--
-INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H001', 'R001');
-INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H002', 'R457');
-INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H055', 'R002');
-INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H150', 'R001');
-INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H854', 'R521');
-INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H855', 'R457');
-INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H954', 'R002');
-INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H958', 'R125');
-INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H003', 'R777');
-INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H333', 'R410');
+INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H1', 'R1');
+INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H2', 'R4');
+INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H3', 'R2');
+INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H4', 'R1');
+INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H5', 'R5');
+INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H6', 'R4');
+INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H7', 'R2');
+INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H8', 'R3');
+INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H9', 'R8');
+INSERT INTO Preference (ID_hostitele, ID_rasy) VALUES ('H10', 'R10');
 
 --INSERT data o aktualnim zivote kocky--
-INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z003', 'T001');
-INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z002', 'T156');
-INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z123', 'T546');
-INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z246', 'T002');
-INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z103', 'T003');
-INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z104', 'T003');
-INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z106', 'T103');
-INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z107', 'T420');
-INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z197', 'T177');
+INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z2', 'T1');
+INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z3', 'T3');
+INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z4', 'T4');
+INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z7', 'T2');
+INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z11', 'T6');
+INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z12', 'T6');
+INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z14', 'T7');
+INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z15', 'T9');
+INSERT INTO Aktualni (ID_zivot, misto_narozeni) VALUES ('Z17', 'T10');
 
 --INSERT data o minulem zivote kocky--
-INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z001', 'prejeta autem' , 'T546');
-INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z222', 'Utopena v zachodu.' ,'T991');
-INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z223', 'Rozmacknuta padem houpacky' ,'T156');
-INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z101', 'corona virus' ,'T991');
-INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z102', 'pad ze strechy' ,'T156');
-INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z105', 'umrela na hlad', 'T111');
-INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z187', 'smrt leknutim' ,'T420');
+INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z1', 'prejeta autem' , 'T4');
+INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z5', 'Utopena v zachodu.' ,'T5');
+INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z6', 'Rozmacknuta padem houpacky' ,'T3');
+INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z9', 'corona virus' ,'T5');
+INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z10', 'pad ze strechy' ,'T3');
+INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z13', 'umrela na hlad', 'T8');
+INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z16', 'smrt leknutim' ,'T9');
 
 ---------------------------------------------------------- SELECT ------------------------------------------------------
 --SQL skript obsahující dotazy SELECT musí obsahovat:
