@@ -19,6 +19,8 @@
   DROP TABLE Minuly                 CASCADE CONSTRAINTS;
   DROP TABLE Aktualni               CASCADE CONSTRAINTS;
 
+  DROP SEQUENCE rasa_pk_seq;
+
 ----------------------------------------- TABLE CREATE -------------------------------------------------
 CREATE TABLE Kocka
         (
@@ -426,7 +428,6 @@ INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z187', 'smrt l
 ---------------------------------------------------------- TRIGERRY ------------------------------------------------------
 
 -- Trigger na vytvoreni ID pro tabulku rasa
-
 CREATE SEQUENCE rasa_pk_seq
   START WITH 790
   INCREMENT BY 1;
