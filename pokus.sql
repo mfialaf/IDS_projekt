@@ -20,6 +20,14 @@
   DROP TABLE Aktualni               CASCADE CONSTRAINTS;
 
   DROP SEQUENCE rasa_pk_seq;
+  DROP SEQUENCE zivot_pk_seq;
+  DROP SEQUENCE teritorium_pk_seq;
+  DROP SEQUENCE hostitel_pk_seq;
+  DROP SEQUENCE vlastnictvi_pk_seq;
+  DROP SEQUENCE spec_rysy_pk_seq;
+  DROP SEQUENCE pohyb_kocky_pk_seq;
+  DROP SEQUENCE interval_vlastnictvi_pk_seq;
+  DROP SEQUENCE slouzi_pk_seq;
 
 ----------------------------------------- TABLE CREATE -------------------------------------------------
 CREATE TABLE Kocka
@@ -430,10 +438,44 @@ INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z16', 'smrt le
 
 ---------------------------------------------------------- TRIGERRY ------------------------------------------------------
 
--- Trigger na vytvoreni ID pro tabulku rasa
+-- Sequence jednotlivych triggeru
 CREATE SEQUENCE rasa_pk_seq
-  START WITH 790
+  START WITH 1
   INCREMENT BY 1;
+
+CREATE SEQUENCE zivot_pk_seq
+  START WITH 1
+  INCREMENT BY 1;
+
+CREATE SEQUENCE teritorium_pk_seq
+  START WITH 1
+  INCREMENT BY 1;
+
+CREATE SEQUENCE hostitel_pk_seq
+  START WITH 1
+  INCREMENT BY 1;
+
+CREATE SEQUENCE vlastnictvi_pk_seq
+  START WITH 1
+  INCREMENT BY 1;
+
+CREATE SEQUENCE spec_rysy_pk_seq
+  START WITH 1
+  INCREMENT BY 1;
+
+CREATE SEQUENCE pohyb_kocky_pk_seq
+  START WITH 1
+  INCREMENT BY 1;
+
+CREATE SEQUENCE interval_vlastnictvi_pk_seq
+  START WITH 1
+  INCREMENT BY 1;
+
+CREATE SEQUENCE slouzi_pk_seq
+  START WITH 1
+  INCREMENT BY 1;
+
+-- Trigger na vytvoreni ID pro tabulku rasa
 
 CREATE OR REPLACE TRIGGER rasa_next_id
     BEFORE INSERT
@@ -446,3 +488,130 @@ BEGIN
     END IF;
 END;
 /
+
+-- Trigger na vytvoreni ID pro tabulku zivot
+
+CREATE OR REPLACE TRIGGER zivot_next_id
+    BEFORE INSERT
+    ON Zivot
+    FOR EACH ROW
+    DECLARE
+BEGIN
+    IF :NEW.ID_zivot  IS NULL THEN
+        :NEW.ID_zivot := 'Z'|| zivot_pk_seq.nextval;
+    END IF;
+END;
+/
+
+-- Trigger na vytvoreni ID pro tabulku teritoria
+
+CREATE OR REPLACE TRIGGER teritorium_next_id
+    BEFORE INSERT
+    ON Teritorium
+    FOR EACH ROW
+    DECLARE
+BEGIN
+    IF :NEW.ID_teritorium  IS NULL THEN
+        :NEW.ID_teritorium := 'T'|| teritorium_pk_seq.nextval;
+    END IF;
+END;
+/
+
+-- Trigger na vytvoreni ID pro tabulku vlastvnictvi
+
+CREATE OR REPLACE TRIGGER vlastnictvi_next_id
+    BEFORE INSERT
+    ON Vlastnictvi
+    FOR EACH ROW
+    DECLARE
+BEGIN
+    IF :NEW.ID_vlastnictvi  IS NULL THEN
+        :NEW.ID_vlastnictvi := 'V'|| vlastnictvi_pk_seq.nextval;
+    END IF;
+END;
+/
+
+-- Trigger na vytvoreni ID pro tabulku hostitel
+
+CREATE OR REPLACE TRIGGER hostitel_next_id
+    BEFORE INSERT
+    ON Hostitel
+    FOR EACH ROW
+    DECLARE
+BEGIN
+    IF :NEW.ID_hostitel  IS NULL THEN
+        :NEW.ID_hostitel := 'H'|| hostitel_pk_seq.nextval;
+    END IF;
+END;
+/
+
+-- Trigger na vytvoreni ID pro Specificke_rysy
+
+CREATE OR REPLACE TRIGGER spec_rysy_next_id
+    BEFORE INSERT
+    ON Specificke_rysy
+    FOR EACH ROW
+    DECLARE
+BEGIN
+    IF :NEW.ID_rysy  IS NULL THEN
+        :NEW.ID_rysy := 'S'|| spec_rysy_pk_seq.nextval;
+    END IF;
+END;
+/
+
+-- Trigger na vytvoreni ID pro Specificke_rysy
+
+CREATE OR REPLACE TRIGGER spec_rysy_next_id
+    BEFORE INSERT
+    ON Specificke_rysy
+    FOR EACH ROW
+    DECLARE
+BEGIN
+    IF :NEW.ID_rysy  IS NULL THEN
+        :NEW.ID_rysy := 'S'|| spec_rysy_pk_seq.nextval;
+    END IF;
+END;
+/
+
+-- Trigger na vytvoreni ID pro Pohyb_kocky
+
+CREATE OR REPLACE TRIGGER pohyb_kocky_next_id
+    BEFORE INSERT
+    ON Pohyb_kocky
+    FOR EACH ROW
+    DECLARE
+BEGIN
+    IF :NEW.ID_pohyb_kocky  IS NULL THEN
+        :NEW.ID_pohyb_kocky := 'PK'|| pohyb_kocky_pk_seq.nextval;
+    END IF;
+END;
+/
+
+-- Trigger na vytvoreni ID pro Interval_vlastnictvi
+
+CREATE OR REPLACE TRIGGER interval_vlastnictvi_next_id
+    BEFORE INSERT
+    ON Interval_vlastnictvi
+    FOR EACH ROW
+    DECLARE
+BEGIN
+    IF :NEW.ID_interval_vlastnictvi  IS NULL THEN
+        :NEW.ID_interval_vlastnictvi := 'IV'|| interval_vlastnictvi_pk_seq.nextval;
+    END IF;
+END;
+/
+
+-- Trigger na vytvoreni ID pro Slouzi
+
+CREATE OR REPLACE TRIGGER slouzi_next_id
+    BEFORE INSERT
+    ON Slouzi
+    FOR EACH ROW
+    DECLARE
+BEGIN
+    IF :NEW.ID_slouzi  IS NULL THEN
+        :NEW.ID_slouzi := 'SL'|| slouzi_pk_seq.nextval;
+    END IF;
+END;
+/
+
