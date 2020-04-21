@@ -67,7 +67,7 @@ CREATE TABLE Hostitel
 
 CREATE TABLE Rasa
         (
-            ID_rasy VARCHAR(4) NOT NULL PRIMARY KEY,
+            ID_rasy VARCHAR(4) PRIMARY KEY,
             typ VARCHAR(50) NOT NULL
         );
 
@@ -423,3 +423,22 @@ INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z187', 'smrt l
             );
 --  - U každého z dotazů musí být (v komentáři SQL kódu) popsáno srozumitelně, jaká data hledá daný dotaz (jaká je jeho funkce v aplikaci).
 
+---------------------------------------------------------- TRIGERRY ------------------------------------------------------
+
+-- Trigger na vytvoreni ID pro tabulku rasa
+
+CREATE SEQUENCE rasa_pk_seq
+  START WITH 790
+  INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER rasa_next_id
+    BEFORE INSERT
+    ON Rasa
+    FOR EACH ROW
+    DECLARE
+BEGIN
+    IF :NEW.ID_Rasy  IS NULL THEN
+        :NEW.ID_Rasy := 'R'|| rasa_pk_seq.nextval;
+    END IF;
+END;
+/
