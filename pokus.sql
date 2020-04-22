@@ -724,3 +724,21 @@ CREATE OR REPLACE PROCEDURE procentualni_rozlozeni_hostitelu_podle_veku_a_pohlav
     BEGIN
         prumerna_kapacita_teritoria();
     END;
+
+    DROP INDEX index_zivot_kocky;
+    EXPLAIN PLAN FOR
+      SELECT Kocka.hlavni_jmeno, count(*) AS POCET_ZIVOTU
+      FROM Kocka, Zivot, Minuly
+      WHERE Kocka.hlavni_jmeno = Zivot.jmeno_kocky AND Zivot.ID_zivot = Minuly.ID_zivot
+      GROUP BY Kocka.hlavni_jmeno;
+    SELECT * FROM table (dbms_xplan.display());
+
+    CREATE INDEX index_zivot_kocky ON Minuly(ID_zivot);
+
+    EXPLAIN PLAN FOR
+      SELECT Kocka.hlavni_jmeno, count(*) AS POCET_ZIVOTU
+      FROM Kocka, Zivot, Minuly
+      WHERE Kocka.hlavni_jmeno = Zivot.jmeno_kocky AND Zivot.ID_zivot = Minuly.ID_zivot
+      GROUP BY Kocka.hlavni_jmeno;
+    SELECT * FROM table (dbms_xplan.display());
+
