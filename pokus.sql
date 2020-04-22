@@ -786,21 +786,28 @@ GRANT EXECUTE ON prumerna_kapacita_teritoria to xfiala60;
 DROP MATERIALIZED VIEW hostitele_slouzici_kocce;
 
 CREATE MATERIALIZED VIEW hostitele_slouzici_kocce
-CACHE -- postupně optimalizuje čtení z pohledu
-BUILD IMMEDIATE -- pohled je naplněn ihned po jeho vytvoření
-REFRESH ON COMMIT AS -- pohled se aktualizuje po commitu master tabulek
+CACHE
+BUILD IMMEDIATE
+refresh on demand with primary key AS
 
     -- Vypis slouzicich hostitelu
-        SELECT XKAMEN21.Hostitel.jmeno as JMENO_HOSTITELE, XKAMEN21.Slouzi.prezdivka as PREZDIVKA_HOSTITELE, XKAMEN21.Kocka.hlavni_jmeno as Jmeno_kocky
-        FROM XKAMEN21.Slouzi JOIN XKAMEN21.Hostitel ON XKAMEN21.Slouzi.ID_hostitele = XKAMEN21.Hostitel.ID_hostitel
-                        JOIN XKAMEN21.Kocka ON XKAMEN21.Slouzi.jmeno_kocky = XKAMEN21.Kocka.hlavni_jmeno
-        ORDER BY XKAMEN21.Hostitel.jmeno;
+SELECT XFIALA60.Hostitel.jmeno as JMENO_HOSTITELE, XFIALA60.Slouzi.prezdivka as PREZDIVKA_HOSTITELE, XFIALA60.Kocka.hlavni_jmeno as Jmeno_kocky
+FROM XFIALA60.Slouzi JOIN XFIALA60.Hostitel ON XFIALA60.Slouzi.ID_hostitele = XFIALA60.Hostitel.ID_hostitel
+                JOIN XFIALA60.Kocka ON XFIALA60.Slouzi.jmeno_kocky = XFIALA60.Kocka.hlavni_jmeno
+ORDER BY XFIALA60.Hostitel.jmeno;
+
+-- Verze kamienkova
+--SELECT XKAMEN21.Hostitel.jmeno as JMENO_HOSTITELE, XKAMEN21.Slouzi.prezdivka as PREZDIVKA_HOSTITELE, XKAMEN21.Kocka.hlavni_jmeno as Jmeno_kocky
+--FROM XKAMEN21.Slouzi JOIN XKAMEN21.Hostitel ON XKAMEN21.Slouzi.ID_hostitele = XKAMEN21.Hostitel.ID_hostitel
+--                JOIN XKAMEN21.Kocka ON XKAMEN21.Slouzi.jmeno_kocky = XKAMEN21.Kocka.hlavni_jmeno
+--ORDER BY XKAMEN21.Hostitel.jmeno;
 
 
 
 -- DEMONSTRACE:
-select * from hostitele_slouzici_kocce;
-INSERT INTO Slouzi (prezdivka, jmeno_kocky, ID_hostitele) VALUES ('zroutprasecak', 'dextr', 'H4');
-select * from hostitele_slouzici_kocce;--materializovaný pohled stále nezměněný
-COMMIT; -- COMMIT aktualizuje materializovaný pohled
-select * from hostitele_slouzici_kocce;--aktualizovaný materializovaný pohled
+select * from hostitele_slouzici_kocce;-- Materialovy pohled pred zmenou
+INSERT INTO XFIALA60.Slouzi (prezdivka, jmeno_kocky, ID_hostitele) VALUES ('zroutprasecak', 'dextr', 'H4');
+--INSERT INTO XKAMEN21.Slouzi (prezdivka, jmeno_kocky, ID_hostitele) VALUES ('zroutprasecak', 'dextr', 'H4');
+select * from hostitele_slouzici_kocce;-- Materialovy pohled po insertu
+COMMIT;
+select * from hostitele_slouzici_kocce;-- Materialovy pohled po commitu
