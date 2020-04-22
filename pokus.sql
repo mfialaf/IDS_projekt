@@ -714,6 +714,9 @@ CREATE OR REPLACE PROCEDURE procentualni_rozlozeni_hostitelu_podle_veku_a_pohlav
       IF REGEXP_LIKE(hostitel_row.pohlavi, '^([m|M][u|U][z|Z])$') THEN muzi := muzi + 1; END IF;
       IF REGEXP_LIKE(hostitel_row.pohlavi, '^([z|Z][e|E][n|N][a|A])$') THEN zeny := zeny + 1; END IF;
     END LOOP;
+    IF celkove = 0 then
+        RAISE NO_DATA_FOUND;
+    end if;
     dbms_output.put_line('Muzi              : ' || ROUND((muzi/celkove)*100,2) ||'%' ||' ('|| muzi ||')');
     dbms_output.put_line('Zeny              : ' || ROUND((zeny/celkove)*100,2) ||'%' ||' ('|| zeny ||')');
     dbms_output.put_line('   ');
@@ -723,6 +726,8 @@ CREATE OR REPLACE PROCEDURE procentualni_rozlozeni_hostitelu_podle_veku_a_pohlav
     dbms_output.put_line('Starsi 50 let     : ' || ROUND((nad_50/celkove)*100,2) ||'%' ||' ('|| nad_50 ||')');
     CLOSE hostitele;
     EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+          RAISE_APPLICATION_ERROR(-20422, 'Nenalezena zadna data');
         WHEN OTHERS THEN
           RAISE_APPLICATION_ERROR(-20421, 'Chyba v procedure');
     END;
