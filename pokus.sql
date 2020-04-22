@@ -672,13 +672,18 @@ BEGIN
         nejmensi_teritorium_nazev := teritorium_row.typ_teritoria;
         END IF;
     END LOOP;
+    IF pocet_teritorii = 0 THEN
+        RAISE NO_DATA_FOUND;
+    END IF;
     dbms_output.put_line('Prumerna kapacita teritoria je ' || ROUND(kapacita_celkem/pocet_teritorii,0) || ' kocek.');
     dbms_output.put_line('Nejmensi teritorium je ' || nejmensi_teritorium_nazev || ' s kapacitou: ' || nejmensi_teritorium_kapacita || '.');
     dbms_output.put_line('Nejvetsi teritorium je ' || nejvetsi_teritorium_nazev || ' s kapacitou: ' || nejvetsi_teritorium_kapacita || '.');
     CLOSE teritoria;
 EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+          RAISE_APPLICATION_ERROR(-20422, 'Nenalezena zadna data');
     WHEN OTHERS THEN
-      RAISE_APPLICATION_ERROR(-20421, 'Chyba v procedure');
+          RAISE_APPLICATION_ERROR(-20421, 'Chyba v procedure');
 END;
 
 
