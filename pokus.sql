@@ -208,7 +208,10 @@ CREATE TABLE Aktualni
 
  ALTER TABLE Interval_vlastnictvi ADD CONSTRAINT check_interval_vlastnictvi CHECK (REGEXP_LIKE(doba, '^([0-9]{1,2}[r,R]){0,1}(([0-9]{1,2}|[1-2][0-9]{2}|[3][0-6][0-5])[d,D]){0,1}$'));
 
----------------------------------------------------------- TRIGERRY ------------------------------------------------------
+
+-------------------------------------------------- IDS cast 4 & 5 -------------------------------------------------
+
+--------------------------------------------------- TRIGERRY ------------------------------------------------------
 
 -- Sequence jednotlivych triggeru
 CREATE SEQUENCE rasa_pk_seq
@@ -619,6 +622,14 @@ INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z16', 'smrt le
             );
 --  - U každého z dotazů musí být (v komentáři SQL kódu) popsáno srozumitelně, jaká data hledá daný dotaz (jaká je jeho funkce v aplikaci).
 
+
+
+---------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------ IDS cast 4 & 5 -----------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------- PROCEDURE ---------------------------------------------------
+
 -- PROCEDURA1: Zjistujici prumernou kapacintu teritorii, nejmensi a nejvetsi teritorium
 CREATE OR REPLACE PROCEDURE prumerna_kapacita_teritoria AS
     CURSOR teritoria IS SELECT * FROM Teritorium;
@@ -665,11 +676,11 @@ BEGIN
     dbms_output.put_line('Nejmensi teritorium je ' || nejmensi_teritorium_nazev || ' s kapacitou: ' || nejmensi_teritorium_kapacita || '.');
     dbms_output.put_line('Nejvetsi teritorium je ' || nejvetsi_teritorium_nazev || ' s kapacitou: ' || nejvetsi_teritorium_kapacita || '.');
     CLOSE teritoria;
-
 EXCEPTION
     WHEN OTHERS THEN
       RAISE_APPLICATION_ERROR(-20421, 'Chyba v procedure');
 END;
+
 
 -- Procedura 2: vypise pocet hostitelu zastoupenych v urcitem veku a take zastoupeni zen a muzu --
 CREATE OR REPLACE PROCEDURE procentualni_rozlozeni_hostitelu_podle_veku_a_pohlavi AS
@@ -716,7 +727,7 @@ CREATE OR REPLACE PROCEDURE procentualni_rozlozeni_hostitelu_podle_veku_a_pohlav
           RAISE_APPLICATION_ERROR(-20421, 'Chyba v procedure');
     END;
 
-
+-- DEMONSTRACE procedur:
     BEGIN
         procentualni_rozlozeni_hostitelu_podle_veku_a_pohlavi();
     END;
@@ -725,25 +736,27 @@ CREATE OR REPLACE PROCEDURE procentualni_rozlozeni_hostitelu_podle_veku_a_pohlav
         prumerna_kapacita_teritoria();
     END;
 
-
+--------------------------------------------- INDEX a EXPLAIN PLAN FOR --------------------------------------------------
 --- INDEX1: Dotaz: vypsani kocek ktere jiz umreli a pocet jejich smrti
     --DROP INDEX index_zivot; -- DROP pro druhy index
     DROP INDEX index_minuly;
+    --EXPLAIN befor INDEX
     EXPLAIN PLAN FOR
       SELECT Kocka.hlavni_jmeno, count(*) AS POCET_UMRTI
       FROM Kocka, Zivot, Minuly
       WHERE Kocka.hlavni_jmeno = Zivot.jmeno_kocky AND Zivot.ID_zivot = Minuly.ID_zivot
       GROUP BY Kocka.hlavni_jmeno;
-    SELECT * FROM table (dbms_xplan.display);
+    SELECT PLAN_TABLE_OUTPUT FROM table (DBMS_XPLAN.DISPLAY());
 
     CREATE INDEX index_minuly ON Minuly(ID_zivot);
 
+    --EXPLAIN after INDEX
     EXPLAIN PLAN FOR
       SELECT Kocka.hlavni_jmeno, count(*) AS POCET_UMRTI
       FROM Kocka, Zivot, Minuly
       WHERE Kocka.hlavni_jmeno = Zivot.jmeno_kocky AND Zivot.ID_zivot = Minuly.ID_zivot
       GROUP BY Kocka.hlavni_jmeno;
-    SELECT * FROM table (dbms_xplan.display);
+    SELECT PLAN_TABLE_OUTPUT FROM table (DBMS_XPLAN.DISPLAY());
 
 -- INDEX2: návrh pro zlepšení optimalizace pomocí dalšího indexu
    -- CREATE INDEX index_zivot ON Zivot(ID_zivot, jmeno_kocky);
@@ -755,14 +768,7 @@ CREATE OR REPLACE PROCEDURE procentualni_rozlozeni_hostitelu_podle_veku_a_pohlav
     --SELECT * FROM table (dbms_xplan.display);
 
 
-
-
-
-
-
-
-
-
+--------------------------------------- DEFINICE PRISTUPOVYCH PRAV PRO XFIALA60 ----------------------------------------------
 -- Pristupova prava druheho clena
 
 GRANT INSERT, UPDATE, SELECT ON Kocka TO xfiala60;
@@ -783,9 +789,11 @@ GRANT ALL ON Aktualni TO xfiala60;
 GRANT EXECUTE ON procentualni_rozlozeni_hostitelu_podle_veku_a_pohlavi to xfiala60;
 GRANT EXECUTE ON prumerna_kapacita_teritoria to xfiala60;
 
+--------------------------------------------------- MATERIALIZED VIEW --------------------------------------------------------
 DROP MATERIALIZED VIEW vypis_kocek_dane_rasy;
 
 
+------ spousti xfiala60 ------
 CREATE MATERIALIZED VIEW vypis_kocek_dane_rasy
 CACHE
 BUILD IMMEDIATE
@@ -795,6 +803,7 @@ SELECT  XFIALA60.Kocka.hlavni_jmeno as JMENO_KOCKY, XFIALA60.Kocka.ID_rasy as ID
 FROM XFIALA60.Kocka JOIN Rasa ON XFIALA60.Kocka.ID_rasy = XFIALA60.Rasa.ID_rasy
 ORDER BY XFIALA60.Kocka.ID_rasy;
 
+-- DEMONSTRACE Materialized view :
 -- Materialovy pohled pred zmenou
 select * from vypis_kocek_dane_rasy;
 INSERT INTO XFIALA60.Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('zabka', 'SKYB', 'seda', 'R6');
