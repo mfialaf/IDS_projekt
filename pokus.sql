@@ -29,7 +29,8 @@
   DROP SEQUENCE interval_vlastnictvi_pk_seq;
   DROP SEQUENCE slouzi_pk_seq;
 
-DROP PROCEDURE prumerna_kapacita_teritoria;
+  DROP PROCEDURE prumerna_kapacita_teritoria;
+  DROP PROCEDURE procentualni_rozlozeni_hostitelu_podle_veku_a_pohlavi;
 
 ----------------------------------------- TABLE CREATE -------------------------------------------------
 CREATE TABLE Kocka
@@ -618,7 +619,6 @@ INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z16', 'smrt le
             );
 --  - U každého z dotazů musí být (v komentáři SQL kódu) popsáno srozumitelně, jaká data hledá daný dotaz (jaká je jeho funkce v aplikaci).
 
-
 -- PROCEDURA1: Zjistujici prumernou kapacintu teritorii, nejmensi a nejvetsi teritorium
 CREATE OR REPLACE PROCEDURE prumerna_kapacita_teritoria AS
     CURSOR teritoria IS SELECT * FROM Teritorium;
@@ -668,11 +668,59 @@ BEGIN
 
 EXCEPTION
     WHEN OTHERS THEN
-      RAISE_APPLICATION_ERROR(-20420, 'Chyba v procedure');
-END;
-/
-
-BEGIN
-    prumerna_kapacita_teritoria();
+      RAISE_APPLICATION_ERROR(-20421, 'Chyba v procedure');
 END;
 
+-- Procedura 2: vypise pocet hostitelu zastoupenych v urcitem veku a take zastoupeni zen a muzu --
+CREATE OR REPLACE PROCEDURE procentualni_rozlozeni_hostitelu_podle_veku_a_pohlavi AS
+  CURSOR hostitele IS SELECT * FROM Hostitel WHERE Hostitel.vek IS NOT NULL;
+  hostitel_row Hostitel%ROWTYPE;
+  celkove NUMBER;
+  do_18 NUMBER;
+  od_18_do_30 NUMBER;
+  od_30_do_50 NUMBER;
+  nad_50 NUMBER;
+  zeny NUMBER;
+  muzi NUMBER;
+
+  BEGIN
+    celkove := 0;
+    do_18 := 0;
+    od_18_do_30 := 0;
+    od_30_do_50 := 0;
+    nad_50 := 0;
+    zeny := 0;
+    muzi := 0;
+    OPEN hostitele;
+    LOOP
+      FETCH hostitele INTO hostitel_row;
+      EXIT WHEN hostitele%NOTFOUND;
+      celkove := celkove + 1;
+      IF hostitel_row.vek BETWEEN 0 AND 18 THEN do_18 := do_18 + 1; END IF;
+      IF hostitel_row.vek BETWEEN 19 AND 30 THEN od_18_do_30 := od_18_do_30 + 1; END IF;
+      IF hostitel_row.vek BETWEEN 30 AND 50 THEN od_30_do_50 := od_30_do_50 + 1; END IF;
+      IF hostitel_row.vek > 50 THEN nad_50 := nad_50 + 1; END IF;
+      IF REGEXP_LIKE(hostitel_row.pohlavi, '^([m|M][u|U][z|Z])$') THEN muzi := muzi + 1; END IF;
+      IF REGEXP_LIKE(hostitel_row.pohlavi, '^([z|Z][e|E][n|N][a|A])$') THEN zeny := zeny + 1; END IF;
+    END LOOP;
+    dbms_output.put_line('Muzi              : ' || ROUND((muzi/celkove)*100,2) ||'%' ||' ('|| muzi ||')');
+    dbms_output.put_line('Zeny              : ' || ROUND((zeny/celkove)*100,2) ||'%' ||' ('|| zeny ||')');
+    dbms_output.put_line('   ');
+    dbms_output.put_line('Do 18 let         : ' || ROUND((do_18/celkove)*100,2) ||'%' ||' ('|| do_18 ||')');
+    dbms_output.put_line('Od 18 do 30 let   : ' || ROUND((od_18_do_30/celkove)*100,2) ||'%' ||' ('|| od_18_do_30 ||')');
+    dbms_output.put_line('Od 30 do 50 let   : ' || ROUND((od_30_do_50/celkove)*100,2) ||'%' ||' ('|| od_30_do_50 ||')');
+    dbms_output.put_line('Starsi 50 let     : ' || ROUND((nad_50/celkove)*100,2) ||'%' ||' ('|| nad_50 ||')');
+    CLOSE hostitele;
+    EXCEPTION
+        WHEN OTHERS THEN
+          RAISE_APPLICATION_ERROR(-20421, 'Chyba v procedure');
+    END;
+
+
+    BEGIN
+        procentualni_rozlozeni_hostitelu_podle_veku_a_pohlavi();
+    END;
+
+    BEGIN
+        prumerna_kapacita_teritoria();
+    END;
