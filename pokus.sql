@@ -783,31 +783,32 @@ GRANT ALL ON Aktualni TO xfiala60;
 GRANT EXECUTE ON procentualni_rozlozeni_hostitelu_podle_veku_a_pohlavi to xfiala60;
 GRANT EXECUTE ON prumerna_kapacita_teritoria to xfiala60;
 
-DROP MATERIALIZED VIEW hostitele_slouzici_kocce;
+DROP MATERIALIZED VIEW vypis_kocek_dane_rasy;
 
-CREATE MATERIALIZED VIEW hostitele_slouzici_kocce
+
+CREATE MATERIALIZED VIEW vypis_kocek_dane_rasy
 CACHE
 BUILD IMMEDIATE
-refresh on demand with primary key AS
+REFRESH FORCE ON COMMIT
+AS
+SELECT  XFIALA60.Kocka.hlavni_jmeno as JMENO_KOCKY, XFIALA60.Kocka.ID_rasy as ID_RASY, XFIALA60.Rasa.typ as ZEME_PUVODU
+FROM XFIALA60.Kocka JOIN Rasa ON XFIALA60.Kocka.ID_rasy = XFIALA60.Rasa.ID_rasy
+ORDER BY XFIALA60.Kocka.ID_rasy;
 
-    -- Vypis slouzicich hostitelu
-SELECT XFIALA60.Hostitel.jmeno as JMENO_HOSTITELE, XFIALA60.Slouzi.prezdivka as PREZDIVKA_HOSTITELE, XFIALA60.Kocka.hlavni_jmeno as Jmeno_kocky
-FROM XFIALA60.Slouzi JOIN XFIALA60.Hostitel ON XFIALA60.Slouzi.ID_hostitele = XFIALA60.Hostitel.ID_hostitel
-                JOIN XFIALA60.Kocka ON XFIALA60.Slouzi.jmeno_kocky = XFIALA60.Kocka.hlavni_jmeno
-ORDER BY XFIALA60.Hostitel.jmeno;
-
--- Verze kamienkova
---SELECT XKAMEN21.Hostitel.jmeno as JMENO_HOSTITELE, XKAMEN21.Slouzi.prezdivka as PREZDIVKA_HOSTITELE, XKAMEN21.Kocka.hlavni_jmeno as Jmeno_kocky
---FROM XKAMEN21.Slouzi JOIN XKAMEN21.Hostitel ON XKAMEN21.Slouzi.ID_hostitele = XKAMEN21.Hostitel.ID_hostitel
---                JOIN XKAMEN21.Kocka ON XKAMEN21.Slouzi.jmeno_kocky = XKAMEN21.Kocka.hlavni_jmeno
---ORDER BY XKAMEN21.Hostitel.jmeno;
+-- Materialovy pohled pred zmenou
+select * from vypis_kocek_dane_rasy;
+INSERT INTO XFIALA60.Kocka (hlavni_jmeno, vzorek_kuze, barva_srsti, ID_rasy) VALUES ('zabka', 'SKYB', 'seda', 'R6');
 
 
-
--- DEMONSTRACE:
-select * from hostitele_slouzici_kocce;-- Materialovy pohled pred zmenou
-INSERT INTO XFIALA60.Slouzi (prezdivka, jmeno_kocky, ID_hostitele) VALUES ('zroutprasecak', 'dextr', 'H4');
---INSERT INTO XKAMEN21.Slouzi (prezdivka, jmeno_kocky, ID_hostitele) VALUES ('zroutprasecak', 'dextr', 'H4');
-select * from hostitele_slouzici_kocce;-- Materialovy pohled po insertu
+-- Materialovy pohled po insertu pred commitem
+select * from vypis_kocek_dane_rasy;
 COMMIT;
-select * from hostitele_slouzici_kocce;-- Materialovy pohled po commitu
+-- Materialovy pohled po commitu
+select * from vypis_kocek_dane_rasy;
+DELETE FROM XFIALA60.KOCKA WHERE HLAVNI_JMENO = 'zabka';
+-- po smazani pred commitem
+select * from vypis_kocek_dane_rasy;
+COMMIT;
+
+-- po smazani po commitu
+select * from vypis_kocek_dane_rasy;
