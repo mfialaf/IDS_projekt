@@ -725,20 +725,31 @@ CREATE OR REPLACE PROCEDURE procentualni_rozlozeni_hostitelu_podle_veku_a_pohlav
         prumerna_kapacita_teritoria();
     END;
 
-    DROP INDEX index_zivot_kocky;
+
+--- INDEX1: Dotaz: vypsani kocek ktere jiz umreli a pocet jejich smrti
+    --DROP INDEX index_zivot; -- DROP pro druhy index
+    DROP INDEX index_minuly;
     EXPLAIN PLAN FOR
-      SELECT Kocka.hlavni_jmeno, count(*) AS POCET_ZIVOTU
+      SELECT Kocka.hlavni_jmeno, count(*) AS POCET_UMRTI
       FROM Kocka, Zivot, Minuly
       WHERE Kocka.hlavni_jmeno = Zivot.jmeno_kocky AND Zivot.ID_zivot = Minuly.ID_zivot
       GROUP BY Kocka.hlavni_jmeno;
-    SELECT * FROM table (dbms_xplan.display());
+    SELECT * FROM table (dbms_xplan.display);
 
-    CREATE INDEX index_zivot_kocky ON Minuly(ID_zivot);
+    CREATE INDEX index_minuly ON Minuly(ID_zivot);
 
     EXPLAIN PLAN FOR
-      SELECT Kocka.hlavni_jmeno, count(*) AS POCET_ZIVOTU
+      SELECT Kocka.hlavni_jmeno, count(*) AS POCET_UMRTI
       FROM Kocka, Zivot, Minuly
       WHERE Kocka.hlavni_jmeno = Zivot.jmeno_kocky AND Zivot.ID_zivot = Minuly.ID_zivot
       GROUP BY Kocka.hlavni_jmeno;
-    SELECT * FROM table (dbms_xplan.display());
+    SELECT * FROM table (dbms_xplan.display);
 
+-- INDEX2: návrh pro zlepšení optimalizace pomocí dalšího indexu
+   -- CREATE INDEX index_zivot ON Zivot(ID_zivot, jmeno_kocky);
+    --EXPLAIN PLAN FOR
+    --  SELECT Kocka.hlavni_jmeno, count(*) AS POCET_UMRTI
+    --  FROM Kocka, Zivot, Minuly
+    --  WHERE Kocka.hlavni_jmeno = Zivot.jmeno_kocky AND Zivot.ID_zivot = Minuly.ID_zivot
+    --  GROUP BY Kocka.hlavni_jmeno;
+    --SELECT * FROM table (dbms_xplan.display);
