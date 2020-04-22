@@ -29,6 +29,8 @@
   DROP SEQUENCE interval_vlastnictvi_pk_seq;
   DROP SEQUENCE slouzi_pk_seq;
 
+DROP PROCEDURE prumerna_kapacita_teritoria;
+
 ----------------------------------------- TABLE CREATE -------------------------------------------------
 CREATE TABLE Kocka
         (
@@ -616,4 +618,61 @@ INSERT INTO Minuly (ID_zivot, zpusob_smrti, misto_umrti) VALUES ('Z16', 'smrt le
             );
 --  - U každého z dotazů musí být (v komentáři SQL kódu) popsáno srozumitelně, jaká data hledá daný dotaz (jaká je jeho funkce v aplikaci).
 
+
+-- PROCEDURA1: Zjistujici prumernou kapacintu teritorii, nejmensi a nejvetsi teritorium
+CREATE OR REPLACE PROCEDURE prumerna_kapacita_teritoria AS
+    CURSOR teritoria IS SELECT * FROM Teritorium;
+    kapacita_celkem INTEGER;
+    pocet_teritorii INTEGER;
+    nejmensi_teritorium_nazev VARCHAR(50);
+    nejvetsi_teritorium_nazev VARCHAR(50);
+    nejmensi_teritorium_kapacita INTEGER;
+    nejvetsi_teritorium_kapacita INTEGER;
+    prvni_nastaveni_pomocna INTEGER;
+
+    teritorium_row teritoria%ROWTYPE;
+BEGIN
+    kapacita_celkem := 0;
+    pocet_teritorii := 0;
+    prvni_nastaveni_pomocna := 0;
+    OPEN teritoria;
+    LOOP
+        FETCH teritoria INTO teritorium_row;
+        EXIT WHEN teritoria%NOTFOUND;
+
+        pocet_teritorii := pocet_teritorii +1;
+        kapacita_celkem := kapacita_celkem + teritorium_row.kapacita_kocek;
+
+        IF prvni_nastaveni_pomocna = 0 THEN
+        nejmensi_teritorium_nazev := teritorium_row.typ_teritoria;
+        nejvetsi_teritorium_nazev := teritorium_row.typ_teritoria;
+        nejmensi_teritorium_kapacita := teritorium_row.kapacita_kocek;
+        nejvetsi_teritorium_kapacita := teritorium_row.kapacita_kocek;
+        prvni_nastaveni_pomocna := 1;
+        END IF;
+
+        IF teritorium_row.kapacita_kocek > nejvetsi_teritorium_kapacita THEN
+        nejvetsi_teritorium_kapacita := teritorium_row.kapacita_kocek;
+        nejvetsi_teritorium_nazev := teritorium_row.typ_teritoria;
+        END IF;
+
+        IF teritorium_row.kapacita_kocek < nejmensi_teritorium_kapacita THEN
+        nejmensi_teritorium_kapacita := teritorium_row.kapacita_kocek;
+        nejmensi_teritorium_nazev := teritorium_row.typ_teritoria;
+        END IF;
+    END LOOP;
+    dbms_output.put_line('Prumerna kapacita teritoria je ' || ROUND(kapacita_celkem/pocet_teritorii,0) || ' kocek.');
+    dbms_output.put_line('Nejmensi teritorium je ' || nejmensi_teritorium_nazev || ' s kapacitou: ' || nejmensi_teritorium_kapacita || '.');
+    dbms_output.put_line('Nejvetsi teritorium je ' || nejvetsi_teritorium_nazev || ' s kapacitou: ' || nejvetsi_teritorium_kapacita || '.');
+    CLOSE teritoria;
+
+EXCEPTION
+    WHEN OTHERS THEN
+      RAISE_APPLICATION_ERROR(-20420, 'Chyba v procedure');
+END;
+/
+
+BEGIN
+    prumerna_kapacita_teritoria();
+END;
 
