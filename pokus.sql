@@ -753,3 +753,54 @@ CREATE OR REPLACE PROCEDURE procentualni_rozlozeni_hostitelu_podle_veku_a_pohlav
     --  WHERE Kocka.hlavni_jmeno = Zivot.jmeno_kocky AND Zivot.ID_zivot = Minuly.ID_zivot
     --  GROUP BY Kocka.hlavni_jmeno;
     --SELECT * FROM table (dbms_xplan.display);
+
+
+
+
+
+
+
+
+
+
+-- Pristupova prava druheho clena
+
+GRANT INSERT, UPDATE, SELECT ON Kocka TO xfiala60;
+GRANT INSERT, UPDATE, SELECT ON Zivot TO xfiala60;
+GRANT INSERT, UPDATE, SELECT ON Teritorium TO xfiala60;
+GRANT INSERT, UPDATE, SELECT ON Vlastnictvi TO xfiala60;
+GRANT INSERT, UPDATE, SELECT ON Rasa TO xfiala60;
+GRANT INSERT, UPDATE, SELECT ON Specificke_rysy TO xfiala60;
+
+GRANT ALL ON Pohyb_kocky TO xfiala60;
+GRANT ALL ON Interval_vlastnictvi TO xfiala60;
+GRANT ALL ON Rysy_rasy TO xfiala60;
+GRANT ALL ON Slouzi TO xfiala60;
+GRANT ALL ON Preference TO xfiala60;
+GRANT ALL ON Minuly TO xfiala60;
+GRANT ALL ON Aktualni TO xfiala60;
+
+GRANT EXECUTE ON procentualni_rozlozeni_hostitelu_podle_veku_a_pohlavi to xfiala60;
+GRANT EXECUTE ON prumerna_kapacita_teritoria to xfiala60;
+
+DROP MATERIALIZED VIEW hostitele_slouzici_kocce;
+
+CREATE MATERIALIZED VIEW hostitele_slouzici_kocce
+CACHE -- postupně optimalizuje čtení z pohledu
+BUILD IMMEDIATE -- pohled je naplněn ihned po jeho vytvoření
+REFRESH ON COMMIT AS -- pohled se aktualizuje po commitu master tabulek
+
+    -- Vypis slouzicich hostitelu
+        SELECT XKAMEN21.Hostitel.jmeno as JMENO_HOSTITELE, XKAMEN21.Slouzi.prezdivka as PREZDIVKA_HOSTITELE, XKAMEN21.Kocka.hlavni_jmeno as Jmeno_kocky
+        FROM XKAMEN21.Slouzi JOIN XKAMEN21.Hostitel ON XKAMEN21.Slouzi.ID_hostitele = XKAMEN21.Hostitel.ID_hostitel
+                        JOIN XKAMEN21.Kocka ON XKAMEN21.Slouzi.jmeno_kocky = XKAMEN21.Kocka.hlavni_jmeno
+        ORDER BY XKAMEN21.Hostitel.jmeno;
+
+
+
+-- DEMONSTRACE:
+select * from hostitele_slouzici_kocce;
+INSERT INTO Slouzi (prezdivka, jmeno_kocky, ID_hostitele) VALUES ('zroutprasecak', 'dextr', 'H4');
+select * from hostitele_slouzici_kocce;--materializovaný pohled stále nezměněný
+COMMIT; -- COMMIT aktualizuje materializovaný pohled
+select * from hostitele_slouzici_kocce;--aktualizovaný materializovaný pohled
