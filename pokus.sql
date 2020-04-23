@@ -781,12 +781,12 @@ CREATE OR REPLACE PROCEDURE procentualni_rozlozeni_hostitelu_podle_veku_a_pohlav
 --------------------------------------- DEFINICE PRISTUPOVYCH PRAV PRO XFIALA60 ----------------------------------------------
 -- Pristupova prava druheho clena
 
-GRANT INSERT, UPDATE, SELECT ON Kocka TO xfiala60;
-GRANT INSERT, UPDATE, SELECT ON Zivot TO xfiala60;
-GRANT INSERT, UPDATE, SELECT ON Teritorium TO xfiala60;
-GRANT INSERT, UPDATE, SELECT ON Vlastnictvi TO xfiala60;
-GRANT INSERT, UPDATE, SELECT ON Rasa TO xfiala60;
-GRANT INSERT, UPDATE, SELECT ON Specificke_rysy TO xfiala60;
+GRANT INSERT, UPDATE, SELECT, DELETE ON Kocka TO xfiala60;
+GRANT INSERT, UPDATE, SELECT, DELETE ON Zivot TO xfiala60;
+GRANT INSERT, UPDATE, SELECT, DELETE ON Teritorium TO xfiala60;
+GRANT INSERT, UPDATE, SELECT, DELETE ON Vlastnictvi TO xfiala60;
+GRANT INSERT, UPDATE, SELECT, DELETE ON Rasa TO xfiala60;
+GRANT INSERT, UPDATE, SELECT, DELETE ON Specificke_rysy TO xfiala60;
 
 GRANT ALL ON Pohyb_kocky TO xfiala60;
 GRANT ALL ON Interval_vlastnictvi TO xfiala60;
