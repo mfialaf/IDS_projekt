@@ -778,39 +778,26 @@ CREATE OR REPLACE PROCEDURE procentualni_rozlozeni_hostitelu_podle_veku_a_pohlav
     --SELECT * FROM table (dbms_xplan.display);
 
 
---------------------------------------- DEFINICE PRISTUPOVYCH PRAV PRO XFIALA60 ----------------------------------------------
+--------------------------------------- DEFINICE PRISTUPOVYCH PRAV PRO XKAMEN21 ----------------------------------------------
 -- Pristupova prava druheho clena
 
-GRANT INSERT, UPDATE, SELECT, DELETE ON Kocka TO xfiala60;
-GRANT INSERT, UPDATE, SELECT, DELETE ON Zivot TO xfiala60;
-GRANT INSERT, UPDATE, SELECT, DELETE ON Teritorium TO xfiala60;
-GRANT INSERT, UPDATE, SELECT, DELETE ON Vlastnictvi TO xfiala60;
-GRANT INSERT, UPDATE, SELECT, DELETE ON Rasa TO xfiala60;
-GRANT INSERT, UPDATE, SELECT, DELETE ON Specificke_rysy TO xfiala60;
+-- spousti se u xfiala60 ------
+GRANT INSERT, UPDATE, SELECT, DELETE ON Kocka TO xkamen21;
+GRANT INSERT, UPDATE, SELECT, DELETE ON Rasa TO xkamen21;
 
-GRANT ALL ON Pohyb_kocky TO xfiala60;
-GRANT ALL ON Interval_vlastnictvi TO xfiala60;
-GRANT ALL ON Rysy_rasy TO xfiala60;
-GRANT ALL ON Slouzi TO xfiala60;
-GRANT ALL ON Preference TO xfiala60;
-GRANT ALL ON Minuly TO xfiala60;
-GRANT ALL ON Aktualni TO xfiala60;
 
-GRANT EXECUTE ON procentualni_rozlozeni_hostitelu_podle_veku_a_pohlavi to xfiala60;
-GRANT EXECUTE ON prumerna_kapacita_teritoria to xfiala60;
 
 --------------------------------------------------- MATERIALIZED VIEW --------------------------------------------------------
 DROP MATERIALIZED VIEW vypis_kocek_dane_rasy;
 
-
------- spousti xfiala60 ------
+------ spousti se u xkamen21 ------
 CREATE MATERIALIZED VIEW vypis_kocek_dane_rasy
 CACHE
 BUILD IMMEDIATE
 REFRESH FORCE ON COMMIT
 AS
 SELECT  XFIALA60.Kocka.hlavni_jmeno as JMENO_KOCKY, XFIALA60.Kocka.ID_rasy as ID_RASY, XFIALA60.Rasa.typ as ZEME_PUVODU
-FROM XFIALA60.Kocka JOIN Rasa ON XFIALA60.Kocka.ID_rasy = XFIALA60.Rasa.ID_rasy
+FROM XFIALA60.Kocka JOIN XFIALA60.Rasa ON XFIALA60.Kocka.ID_rasy = XFIALA60.Rasa.ID_rasy
 ORDER BY XFIALA60.Kocka.ID_rasy;
 
 -- DEMONSTRACE Materialized view :
@@ -829,5 +816,9 @@ DELETE FROM XFIALA60.KOCKA WHERE HLAVNI_JMENO = 'zabka';
 select * from vypis_kocek_dane_rasy;
 COMMIT;
 
+
 -- po smazani po commitu
 select * from vypis_kocek_dane_rasy;
+
+
+
